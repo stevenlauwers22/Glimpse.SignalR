@@ -1,0 +1,2142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SignalR</name>
+    </assembly>
+    <members>
+        <member name="T:SignalR.IConfigurationManager">
+            <summary>
+            Provides access to server configuration.
+            </summary>
+        </member>
+        <member name="P:SignalR.IConfigurationManager.ConnectionTimeout">
+            <summary>
+            Gets or sets a <see cref="T:System.TimeSpan"/> representing the amount of time to leave a connection open before timing out.
+            </summary>
+        </member>
+        <member name="P:SignalR.IConfigurationManager.DisconnectTimeout">
+            <summary>
+            Gets or sets a <see cref="T:System.TimeSpan"/> representing the amount of time to wait after a connection goes away before raising the disconnect event.
+            </summary>
+        </member>
+        <member name="P:SignalR.IConfigurationManager.HeartBeatInterval">
+            <summary>
+            Gets or sets a <see cref="T:System.TimeSpan"/> representing the interval for checking the state of a connection. 
+            </summary>
+        </member>
+        <member name="P:SignalR.IConfigurationManager.KeepAlive">
+            <summary>
+            Gets or sets a <see cref="T:System.TimeSpan"/> representing the amount of time to wait before sending a keep alive packet over an idle connection. Set to null to disable keep alive.
+            </summary>
+        </member>
+        <member name="T:SignalR.ConnectionManager">
+            <summary>
+            Default <see cref="T:SignalR.IConnectionManager"/> implementation.
+            </summary>
+        </member>
+        <member name="T:SignalR.IConnectionManager">
+            <summary>
+            Provides access to hubs and persistent connections references.
+            </summary>
+        </member>
+        <member name="M:SignalR.IConnectionManager.GetHubContext``1">
+            <summary>
+            Returns a <see cref="T:SignalR.Hubs.IHubContext"/> for the specified <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+            <typeparam name="T">Type of the <see cref="T:SignalR.Hubs.IHub"/></typeparam>
+            <returns>a <see cref="T:SignalR.Hubs.IHubContext"/> for the specified <see cref="T:SignalR.Hubs.IHub"/></returns>
+        </member>
+        <member name="M:SignalR.IConnectionManager.GetHubContext(System.String)">
+            <summary>
+            Returns a <see cref="T:SignalR.Hubs.IHubContext"/>for the specified hub.
+            </summary>
+            <param name="hubName">Name of the hub</param>
+            <returns>a <see cref="T:SignalR.Hubs.IHubContext"/> for the specified hub</returns>
+        </member>
+        <member name="M:SignalR.IConnectionManager.GetConnectionContext``1">
+            <summary>
+            Returns a <see cref="T:SignalR.IPersistentConnectionContext"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+            <typeparam name="T">Type of the <see cref="T:SignalR.PersistentConnection"/></typeparam>
+            <returns>A <see cref="T:SignalR.IPersistentConnectionContext"/> for the <see cref="T:SignalR.PersistentConnection"/>.</returns>
+        </member>
+        <member name="M:SignalR.ConnectionManager.#ctor(SignalR.IDependencyResolver)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.ConnectionManager"/> class.
+            </summary>
+            <param name="resolver">The <see cref="T:SignalR.IDependencyResolver"/>.</param>
+        </member>
+        <member name="M:SignalR.ConnectionManager.GetConnectionContext``1">
+            <summary>
+            Returns a <see cref="T:SignalR.IPersistentConnectionContext"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+            <typeparam name="T">Type of the <see cref="T:SignalR.PersistentConnection"/></typeparam>
+            <returns>A <see cref="T:SignalR.IPersistentConnectionContext"/> for the <see cref="T:SignalR.PersistentConnection"/>.</returns>
+        </member>
+        <member name="M:SignalR.ConnectionManager.GetConnection(System.Type)">
+            <summary>
+            Returns a <see cref="T:SignalR.IPersistentConnectionContext"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+            <param name="type">Type of the <see cref="T:SignalR.PersistentConnection"/></param>
+            <returns>A <see cref="T:SignalR.IPersistentConnectionContext"/> for the <see cref="T:SignalR.PersistentConnection"/>.</returns>
+        </member>
+        <member name="M:SignalR.ConnectionManager.GetHubContext``1">
+            <summary>
+            Returns a <see cref="T:SignalR.Hubs.IHubContext"/> for the specified <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+            <typeparam name="T">Type of the <see cref="T:SignalR.Hubs.IHub"/></typeparam>
+            <returns>a <see cref="T:SignalR.Hubs.IHubContext"/> for the specified <see cref="T:SignalR.Hubs.IHub"/></returns>
+        </member>
+        <member name="M:SignalR.ConnectionManager.GetHubContext(System.String)">
+            <summary>
+            Returns a <see cref="T:SignalR.Hubs.IHubContext"/>for the specified hub.
+            </summary>
+            <param name="hubName">Name of the hub</param>
+            <returns>a <see cref="T:SignalR.Hubs.IHubContext"/> for the specified hub</returns>
+        </member>
+        <member name="T:SignalR.ConnectionMessage">
+            <summary>
+            A message sent to one more connections.
+            </summary>
+        </member>
+        <member name="M:SignalR.ConnectionMessage.#ctor(System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.ConnectionMessage"/> class.
+            </summary>
+            <param name="signal">The signal</param>
+            <param name="value">The payload of the message</param>
+        </member>
+        <member name="P:SignalR.ConnectionMessage.Signal">
+            <summary>
+            The signal to this message should be sent to. Connections subscribed to this signal
+            will receive the message payload.
+            </summary>
+        </member>
+        <member name="P:SignalR.ConnectionMessage.Value">
+            <summary>
+            The payload of the message.
+            </summary>
+        </member>
+        <member name="P:SignalR.ConnectionMessage.ExcludedSignals">
+            <summary>
+            Represents a list of signals that should be used to filter what connections
+            receive this message.
+            </summary>
+        </member>
+        <member name="F:SignalR.HostConstants.DebugMode">
+            <summary>
+            The host should set this if they need to enable debug mode
+            </summary>
+        </member>
+        <member name="F:SignalR.HostConstants.SupportsWebSockets">
+            <summary>
+            The host should set this is web sockets can be supported
+            </summary>
+        </member>
+        <member name="F:SignalR.HostConstants.WebSocketServerUrl">
+            <summary>
+            The host should set this if the web socket url is different
+            </summary>
+        </member>
+        <member name="T:SignalR.IRequest">
+            <summary>
+            Represents a SignalR request
+            </summary>
+        </member>
+        <member name="M:SignalR.IRequest.AcceptWebSocketRequest(System.Func{SignalR.IWebSocket,System.Threading.Tasks.Task})">
+            <summary>
+            Accepts an websocket request using the specified user function.
+            </summary>
+            <param name="callback">The callback that fires when the websocket is ready.</param>
+        </member>
+        <member name="P:SignalR.IRequest.Url">
+            <summary>
+            Gets the url for this request.
+            </summary>
+        </member>
+        <member name="P:SignalR.IRequest.QueryString">
+            <summary>
+            Gets the querystring for this request.
+            </summary>
+        </member>
+        <member name="P:SignalR.IRequest.Headers">
+            <summary>
+            Gets the headers for this request.
+            </summary>
+        </member>
+        <member name="P:SignalR.IRequest.ServerVariables">
+            <summary>
+            Gets the server variables for this request.
+            </summary>
+        </member>
+        <member name="P:SignalR.IRequest.Form">
+            <summary>
+            Gets the form for this request.
+            </summary>
+        </member>
+        <member name="P:SignalR.IRequest.Cookies">
+            <summary>
+            Gets the cookies for this request.
+            </summary>
+        </member>
+        <member name="P:SignalR.IRequest.User">
+            <summary>
+            Gets security information for the current HTTP request.
+            </summary>
+        </member>
+        <member name="T:SignalR.IResponse">
+            <summary>
+            Represents a connection to the client.
+            </summary>
+        </member>
+        <member name="M:SignalR.IResponse.Write(System.ArraySegment{System.Byte})">
+            <summary>
+            Writes buffered data.
+            </summary>
+            <param name="data">The data to write to the buffer.</param>
+        </member>
+        <member name="M:SignalR.IResponse.FlushAsync">
+            <summary>
+            Flushes the buffered response to the client.
+            </summary>
+            <returns>A task that represents when the data has been flushed.</returns>
+        </member>
+        <member name="M:SignalR.IResponse.EndAsync">
+            <summary>
+            Closes the connection to the client.
+            </summary>
+            <returns>A task that represents when the connection is closed.</returns>
+        </member>
+        <member name="P:SignalR.IResponse.IsClientConnected">
+            <summary>
+            Gets a value that determines if this client is still connected.
+            </summary>
+        </member>
+        <member name="P:SignalR.IResponse.ContentType">
+            <summary>
+            Gets or sets the content type of the response.
+            </summary>
+        </member>
+        <member name="T:SignalR.IWebSocket">
+            <summary>
+            Represents a web socket.
+            </summary>
+        </member>
+        <member name="M:SignalR.IWebSocket.Send(System.String)">
+            <summary>
+            Sends data over the websocket.
+            </summary>
+            <param name="value">The value to send.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the send is complete.</returns>
+        </member>
+        <member name="P:SignalR.IWebSocket.OnMessage">
+            <summary>
+            Invoked when data is sent over the websocket
+            </summary>
+        </member>
+        <member name="P:SignalR.IWebSocket.OnClose">
+            <summary>
+            Invoked when the websocket gracefully closes
+            </summary>
+        </member>
+        <member name="P:SignalR.IWebSocket.OnError">
+            <summary>
+            Invoked when there is an error
+            </summary>
+        </member>
+        <member name="T:SignalR.ResponseExtensions">
+            <summary>
+            Extension methods for <see cref="T:SignalR.IResponse"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.ResponseExtensions.EndAsync(SignalR.IResponse,System.String)">
+            <summary>
+            Closes the connection to a client with optional data.
+            </summary>
+            <param name="response">The <see cref="T:SignalR.IResponse"/>.</param>
+            <param name="data">The data to write to the connection.</param>
+            <returns>A task that represents when the connection is closed.</returns>
+        </member>
+        <member name="M:SignalR.ResponseExtensions.AsStream(SignalR.IResponse)">
+            <summary>
+            Wraps the underlying <see cref="T:SignalR.IResponse"/> object as a stream
+            </summary>
+            <param name="response">The <see cref="T:SignalR.IResponse"/></param>
+            <returns>A stream the wraps the response</returns>
+        </member>
+        <member name="T:SignalR.ResponseExtensions.ResponseStream">
+            <summary>
+            Stream wrapper around an <see cref="T:SignalR.IResponse"/>
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.HubConnectionContext">
+            <summary>
+            Encapsulates all information about an individual SignalR connection for an <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.HubConnectionContext.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.Hubs.HubConnectionContext"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.HubConnectionContext.#ctor(SignalR.Hubs.IHubPipelineInvoker,SignalR.IConnection,System.String,System.String,SignalR.Hubs.TrackingDictionary)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.Hubs.HubConnectionContext"/>.
+            </summary>
+            <param name="pipelineInvoker">The pipeline invoker.</param>
+            <param name="connection">The connection.</param>
+            <param name="hubName">The hub name.</param>
+            <param name="connectionId">The connection id.</param>
+            <param name="state">The connection hub state.</param>
+        </member>
+        <member name="M:SignalR.Hubs.HubConnectionContext.AllExcept(System.String[])">
+            <summary>
+            Returns a dynamic representation of all clients except the calling client ones specified.
+            </summary>
+            <param name="exclude">A list of connection ids to exclude.</param>
+            <returns>A dynamic representation of all clients except the calling client ones specified.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.HubConnectionContext.OthersInGroup(System.String)">
+            <summary>
+            Returns a dynamic representation of all clients in a group except the calling client.
+            </summary>
+            <param name="groupName">The name of the group</param>
+            <returns>A dynamic representation of all clients in a group except the calling client.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.HubConnectionContext.Group(System.String,System.String[])">
+            <summary>
+            Returns a dynamic representation of the specified group.
+            </summary>
+            <param name="groupName">The name of the group</param>
+            <param name="exclude">A list of connection ids to exclude.</param>
+            <returns>A dynamic representation of the specified group.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.HubConnectionContext.Client(System.String)">
+            <summary>
+            Returns a dynamic representation of the connection with the specified connectionid.
+            </summary>
+            <param name="connectionId">The connection id</param>
+            <returns>A dynamic representation of the specified client.</returns>
+        </member>
+        <member name="P:SignalR.Hubs.HubConnectionContext.All">
+            <summary>
+            All connected clients.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubConnectionContext.Others">
+            <summary>
+            All connected clients except the calling client.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubConnectionContext.Caller">
+            <summary>
+            Represents the calling client.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.AuthorizeModule">
+             <summary>
+             This module is added the the HubPipeline by default.
+             
+             Hub level attributes that implement <see cref="T:SignalR.Hubs.IAuthorizeHubConnection"/> such as <see cref="T:SignalR.Hubs.AuthorizeAttribute"/> are applied to determine
+             whether to allow potential clients to receive messages sent from that hub using a <see cref="T:SignalR.Hubs.HubContext"/> or a <see cref="T:SignalR.Hubs.HubConnectionContext"/>
+             All applicable hub attributes must allow hub connection for the connection to be authorized.
+             
+             Hub and method level attributes that implement <see cref="T:SignalR.Hubs.IAuthorizeHubMethodInvocation"/> such as <see cref="T:SignalR.Hubs.AuthorizeAttribute"/> are applied
+             to determine whether to allow callers to invoke hub methods.
+             All applicable hub level AND method level attributes must allow hub method invocation for the invocation to be authorized.
+            
+             Optionally, this module may be instantiated with <see cref="T:SignalR.Hubs.IAuthorizeHubConnection"/> and <see cref="T:SignalR.Hubs.IAuthorizeHubMethodInvocation"/>
+             authorizers that will be applied globally to all hubs and hub methods.
+             </summary>
+        </member>
+        <member name="T:SignalR.Hubs.HubPipelineModule">
+            <summary>
+            Common base class to simplify the implementation of IHubPipelineModules
+            A module can be activated by calling IHubPipeline.AddModule.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubPipelineModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildIncoming(System.Func{SignalR.Hubs.IHubIncomingInvokerContext,System.Threading.Tasks.Task{System.Object}})">
+            <summary>
+            
+            </summary>
+            <param name="invoke"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildOutgoing(System.Func{SignalR.Hubs.IHubOutgoingInvokerContext,System.Threading.Tasks.Task})">
+            <summary>
+            
+            </summary>
+            <param name="send"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildConnect(System.Func{SignalR.Hubs.IHub,System.Threading.Tasks.Task})">
+            <summary>
+            
+            </summary>
+            <param name="connect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildReconnect(System.Func{SignalR.Hubs.IHub,System.Threading.Tasks.Task})">
+            <summary>
+            
+            </summary>
+            <param name="reconnect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildDisconnect(System.Func{SignalR.Hubs.IHub,System.Threading.Tasks.Task})">
+            <summary>
+            
+            </summary>
+            <param name="disconnect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildAuthorizeConnect(System.Func{SignalR.Hubs.HubDescriptor,SignalR.IRequest,System.Boolean})">
+            <summary>
+            
+            </summary>
+            <param name="authorizeConnect"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineModule.BuildRejoiningGroups(System.Func{SignalR.Hubs.IHub,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String}})">
+            <summary>
+            
+            </summary>
+            <param name="rejoiningGroups"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SignalR.Hubs.IAuthorizeHubConnection">
+            <summary>
+            Interface to be implemented by <see cref="T:System.Attribute"/>s that can authorize client to connect to a <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IAuthorizeHubConnection.AuthorizeHubConnection(SignalR.Hubs.HubDescriptor,SignalR.IRequest)">
+            <summary>
+            Given a <see cref="T:SignalR.Hubs.HubCallerContext"/>, determine whether client is authorized to connect to <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+            <param name="hubDescriptor">Description of the hub client is attempting to connect to.</param>
+            <param name="request">The connection request from the client.</param>
+            <returns>true if the caller is authorized to connect to the hub; otherwise, false.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.IAuthorizeHubMethodInvocation">
+            <summary>
+            Interface to be implemented by <see cref="T:System.Attribute"/>s that can authorize the invocation of <see cref="T:SignalR.Hubs.IHub"/> methods.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IAuthorizeHubMethodInvocation.AuthorizeHubMethodInvocation(SignalR.Hubs.IHubIncomingInvokerContext)">
+            <summary>
+            Given a <see cref="T:SignalR.Hubs.IHubIncomingInvokerContext"/>, determine whether client is authorized to invoke the <see cref="T:SignalR.Hubs.IHub"/> method.
+            </summary>
+            <param name="hubIncomingInvokerContext">An <see cref="T:SignalR.Hubs.IHubIncomingInvokerContext"/> providing details regarding the <see cref="T:SignalR.Hubs.IHub"/> method invocation.</param>
+            <returns>true if the caller is authorized to invoke the <see cref="T:SignalR.Hubs.IHub"/> method; otherwise, false.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.AutoRejoiningGroupsModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubOutgoingInvokerContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubOutgoingInvokerContext.Connection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubOutgoingInvokerContext.Invocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubOutgoingInvokerContext.Signal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubOutgoingInvokerContext.ExcludedSignals">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.ClientHubInvocation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ClientHubInvocation.Target">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ClientHubInvocation.Hub">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ClientHubInvocation.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ClientHubInvocation.Args">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ClientHubInvocation.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubContext">
+            <summary>
+            Provides access to information about a <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubContext.Group(System.String,System.String[])">
+            <summary>
+            Returns a dynamic representation of the specified group.
+            </summary>
+            <param name="groupName">The name of the group</param>
+            <param name="exclude">A list of connection ids to exclude.</param>
+            <returns>A dynamic representation of the specified group.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubContext.Client(System.String)">
+            <summary>
+            Returns a dynamic representation of the connection with the specified connectionid.
+            </summary>
+            <param name="connectionId">The connection id</param>
+            <returns>A dynamic representation of the connection with the specified connectionid.</returns>
+        </member>
+        <member name="P:SignalR.Hubs.IHubContext.Clients">
+            <summary>
+            Gets a dynamic object that represents all clients connected to the hub.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubContext.Groups">
+            <summary>
+            Gets the <see cref="T:SignalR.IGroupManager"/> the hub.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubPipelineInvoker">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.Invoke(SignalR.Hubs.IHubIncomingInvokerContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.Send(SignalR.Hubs.IHubOutgoingInvokerContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.Connect(SignalR.Hubs.IHub)">
+            <summary>
+            
+            </summary>
+            <param name="hub"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.Reconnect(SignalR.Hubs.IHub)">
+            <summary>
+            
+            </summary>
+            <param name="hub"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.Disconnect(SignalR.Hubs.IHub)">
+            <summary>
+            
+            </summary>
+            <param name="hub"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.AuthorizeConnect(SignalR.Hubs.HubDescriptor,SignalR.IRequest)">
+            <summary>
+            
+            </summary>
+            <param name="hubDescriptor"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipelineInvoker.RejoiningGroups(SignalR.Hubs.IHub,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="hub"></param>
+            <param name="groups"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SignalR.Hubs.HubInvokerContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubIncomingInvokerContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubIncomingInvokerContext.Hub">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubIncomingInvokerContext.MethodDescriptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubIncomingInvokerContext.Args">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHubIncomingInvokerContext.State">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubRequestParser">
+            <summary>
+            Handles parsing incoming requests through the <see cref="T:SignalR.Hubs.HubDispatcher"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubRequestParser.Parse(System.String)">
+            <summary>
+            Parses the incoming hub payload into a <see cref="T:SignalR.Hubs.HubRequest"/>.
+            </summary>
+            <param name="data">The raw hub payload.</param>
+            <returns>The resulting <see cref="T:SignalR.Hubs.HubRequest"/>.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.HubResponse">
+            <summary>
+            The response returned from an incoming hub request.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubResponse.State">
+            <summary>
+            The changes made the the round tripped state.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubResponse.Result">
+            <summary>
+            The result of the invocation.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubResponse.Id">
+            <summary>
+            The id of the operation.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubResponse.Error">
+            <summary>
+            The exception that occurs as a result of invoking the hub method.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubResponse.StackTrace">
+            <summary>
+            The stack trace of the exception that occurs as a result of invoking the hub method.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IClientProxy">
+            <summary>
+            A server side proxy for the client side hub.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IClientProxy.Invoke(System.String,System.Object[])">
+            <summary>
+            Invokes a method on the connection(s) represented by the <see cref="T:SignalR.Hubs.IClientProxy"/> instance.
+            </summary>
+            <param name="method">name of the method to invoke</param>
+            <param name="args">argumetns to pass to the client</param>
+            <returns>A task that represents when the data has been sent to the client.</returns>
+        </member>
+        <member name="P:SignalR.Hubs.Descriptor.Name">
+            <summary>
+            Name of Descriptor.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.Descriptor.NameSpecified">
+            <summary>
+            Flags whether the name was specified.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubPipeline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubPipeline.AddModule(SignalR.Hubs.IHubPipelineModule)">
+            <summary>
+            
+            </summary>
+            <param name="module"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SignalR.IConnectionGroupManager">
+            <summary>
+            Manages groups for a connection and allows sending messages to the group.
+            </summary>
+        </member>
+        <member name="T:SignalR.IGroupManager">
+            <summary>
+            Manages groups for a connection.
+            </summary>
+        </member>
+        <member name="M:SignalR.IGroupManager.Add(System.String,System.String)">
+            <summary>
+            Adds a connection to the specified group. 
+            </summary>
+            <param name="connectionId">The connection id to add to the group.</param>
+            <param name="groupName">The name of the group</param>
+            <returns>A task that represents the connection id being added to the group.</returns>
+        </member>
+        <member name="M:SignalR.IGroupManager.Remove(System.String,System.String)">
+            <summary>
+            Removes a connection from the specified group.
+            </summary>
+            <param name="connectionId">The connection id to remove from the group.</param>
+            <param name="groupName">The name of the group</param>
+            <returns>A task that represents the connection id being removed from the group.</returns>
+        </member>
+        <member name="M:SignalR.IConnectionGroupManager.Send(System.String,System.Object,System.String[])">
+            <summary>
+            Sends a value to the specified group.
+            </summary>
+            <param name="groupName">The name of the group.</param>
+            <param name="value">The value to send.</param>
+            <param name="exclude">List of connection ids to exclude</param>
+            <returns>A task that represents when send is complete.</returns>
+        </member>
+        <member name="T:SignalR.Infrastructure.IPerformanceCounterManager">
+            <summary>
+            Provides access to performance counters.
+            </summary>
+        </member>
+        <member name="M:SignalR.Infrastructure.IPerformanceCounterManager.Initialize(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Initializes the performance counters.
+            </summary>
+            <param name="instanceName">The host instance name.</param>
+            <param name="hostShutdownToken">The CancellationToken representing the host shutdown.</param>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionsConnected">
+            <summary>
+            Gets the performance counter representing the total number of connection Connect events since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionsReconnected">
+            <summary>
+            Gets the performance counter representing the total number of connection Reconnect events since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionsDisconnected">
+            <summary>
+            Gets the performance counter representing the total number of connection Disconnect events since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionsCurrent">
+            <summary>
+            Gets the performance counter representing the number of connections currently connected.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionMessagesReceivedTotal">
+            <summary>
+            Gets the performance counter representing the toal number of messages received by connections (server to client) since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionMessagesSentTotal">
+            <summary>
+            Gets the performance counter representing the toal number of messages received by connections (server to client) since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionMessagesReceivedPerSec">
+            <summary>
+            Gets the performance counter representing the number of messages received by connections (server to client) per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ConnectionMessagesSentPerSec">
+            <summary>
+            Gets the performance counter representing the number of messages sent by connections (client to server) per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusMessagesPublishedTotal">
+            <summary>
+            Gets the performance counter representing the total number of messages published to the message bus since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusMessagesPublishedPerSec">
+            <summary>
+            Gets the performance counter representing the number of messages published to the message bus per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusSubscribersCurrent">
+            <summary>
+            Gets the performance counter representing the current number of subscribers to the message bus.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusSubscribersTotal">
+            <summary>
+            Gets the performance counter representing the total number of subscribers to the message bus since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusSubscribersPerSec">
+            <summary>
+            Gets the performance counter representing the number of new subscribers to the message bus per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusAllocatedWorkers">
+            <summary>
+            Gets the performance counter representing the number of workers allocated to deliver messages in the message bus.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.MessageBusBusyWorkers">
+            <summary>
+            Gets the performance counter representing the number of workers currently busy delivering messages in the message bus.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsAllTotal">
+            <summary>
+            Gets the performance counter representing the total number of all errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsAllPerSec">
+            <summary>
+            Gets the performance counter representing the number of all errors processed per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsHubResolutionTotal">
+            <summary>
+            Gets the performance counter representing the total number of hub resolution errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsHubResolutionPerSec">
+            <summary>
+            Gets the performance counter representing the number of hub resolution errors per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsHubInvocationTotal">
+            <summary>
+            Gets the performance counter representing the total number of hub invocation errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsHubInvocationPerSec">
+            <summary>
+            Gets the performance counter representing the number of hub invocation errors per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsTransportTotal">
+            <summary>
+            Gets the performance counter representing the total number of transport errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IPerformanceCounterManager.ErrorsTransportPerSec">
+            <summary>
+            Gets the performance counter representing the number of transport errors per second.
+            </summary>
+        </member>
+        <member name="T:SignalR.Infrastructure.PerformanceCounterManager">
+            <summary>
+            Manages performance counters using Windows performance counters.
+            </summary>
+        </member>
+        <member name="F:SignalR.Infrastructure.PerformanceCounterManager.CategoryName">
+            <summary>
+            The performance counter category name for SignalR counters.
+            </summary>
+        </member>
+        <member name="M:SignalR.Infrastructure.PerformanceCounterManager.#ctor">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="M:SignalR.Infrastructure.PerformanceCounterManager.Initialize(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Initializes the performance counters.
+            </summary>
+            <param name="instanceName">The host instance name.</param>
+            <param name="hostShutdownToken">The CancellationToken representing the host shutdown.</param>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionsConnected">
+            <summary>
+            Gets the performance counter representing the total number of connection Connect events since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionsReconnected">
+            <summary>
+            Gets the performance counter representing the total number of connection Reconnect events since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionsDisconnected">
+            <summary>
+            Gets the performance counter representing the total number of connection Disconnect events since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionsCurrent">
+            <summary>
+            Gets the performance counter representing the number of connections currently connected.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionMessagesReceivedTotal">
+            <summary>
+            Gets the performance counter representing the toal number of messages received by connections (server to client) since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionMessagesSentTotal">
+            <summary>
+            Gets the performance counter representing the total number of messages sent by connections (client to server) since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionMessagesReceivedPerSec">
+            <summary>
+            Gets the performance counter representing the number of messages received by connections (server to client) per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ConnectionMessagesSentPerSec">
+            <summary>
+            Gets the performance counter representing the number of messages sent by connections (client to server) per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusMessagesPublishedTotal">
+            <summary>
+            Gets the performance counter representing the total number of messages published to the message bus since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusMessagesPublishedPerSec">
+            <summary>
+            Gets the performance counter representing the number of messages published to the message bus per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusSubscribersCurrent">
+            <summary>
+            Gets the performance counter representing the current number of subscribers to the message bus.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusSubscribersTotal">
+            <summary>
+            Gets the performance counter representing the total number of subscribers to the message bus since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusSubscribersPerSec">
+            <summary>
+            Gets the performance counter representing the number of new subscribers to the message bus per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusAllocatedWorkers">
+            <summary>
+            Gets the performance counter representing the number of workers allocated to deliver messages in the message bus.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.MessageBusBusyWorkers">
+            <summary>
+            Gets the performance counter representing the number of workers currently busy delivering messages in the message bus.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsAllTotal">
+            <summary>
+            Gets the performance counter representing the total number of all errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsAllPerSec">
+            <summary>
+            Gets the performance counter representing the number of all errors processed per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsHubResolutionTotal">
+            <summary>
+            Gets the performance counter representing the total number of hub resolution errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsHubResolutionPerSec">
+            <summary>
+            Gets the performance counter representing the number of hub resolution errors per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsHubInvocationTotal">
+            <summary>
+            Gets the performance counter representing the total number of hub invocation errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsHubInvocationPerSec">
+            <summary>
+            Gets the performance counter representing the number of hub invocation errors per second.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsTransportTotal">
+            <summary>
+            Gets the performance counter representing the total number of transport errors processed since the application was started.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.PerformanceCounterManager.ErrorsTransportPerSec">
+            <summary>
+            Gets the performance counter representing the number of transport errors per second.
+            </summary>
+        </member>
+        <member name="T:SignalR.Disposer">
+            <summary>
+            Helper class to manage disposing a resource at an arbirtary time
+            </summary>
+        </member>
+        <member name="T:SignalR.IJsonValue">
+            <summary>
+            Represents a JSON value.
+            </summary>
+        </member>
+        <member name="M:SignalR.IJsonValue.ConvertTo(System.Type)">
+            <summary>
+            Converts the parameter value to the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> to convert the parameter to.</param>
+            <returns>The converted parameter value.</returns>
+        </member>
+        <member name="M:SignalR.IJsonValue.CanConvertTo(System.Type)">
+            <summary>
+            Determines if the parameter can be converted to the specified <see cref="T:System.Type"/>.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/> to check.</param>
+            <returns>True if the parameter can be converted to the specified <see cref="T:System.Type"/>, false otherwise.</returns>
+        </member>
+        <member name="T:SignalR.IJsonWritable">
+            <summary>
+            Implementations handle their own serialization to JSON.
+            </summary>
+        </member>
+        <member name="M:SignalR.IJsonWritable.WriteJson(System.IO.TextWriter)">
+            <summary>
+            Serializes itself to JSON via a <see cref="T:System.IO.TextWriter"/>.
+            </summary>
+            <param name="writer">The <see cref="T:System.IO.TextWriter"/> that receives the JSON serialized object.</param>
+        </member>
+        <member name="T:SignalR.JTokenValue">
+            <summary>
+            An implementation of IJsonValue over JSON.NET
+            </summary>
+        </member>
+        <member name="M:SignalR.ConnectionExtensions.Send(SignalR.IConnection,System.String,System.Object,System.String[])">
+            <summary>
+            Sends a message to all connections subscribed to the specified signal. An example of signal may be a
+            specific connection id, or fully qualified group name (Use <see cref="T:SignalR.IGroupManager"/> to manipulate groups).
+            </summary>
+            <param name="connection">The connection</param>
+            <param name="signal">The signal to send to.</param>
+            <param name="value">The value to publish.</param>
+            <param name="exclude">The list of connection ids to exclude</param>
+            <returns>A task that represents when the broadcast is complete.</returns>
+        </member>
+        <member name="M:SignalR.ConnectionExtensions.Broadcast(SignalR.IConnection,System.Object,System.String[])">
+            <summary>
+            Broadcasts a value to all connections, excluding the connection ids specified.
+            </summary>
+            <param name="connection">The connection</param>
+            <param name="value">The value to broadcast.</param>
+            <param name="exclude">The list of connection ids to exclude</param>
+            <returns>A task that represents when the broadcast is complete.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.IParameterResolver">
+            <summary>
+            Describes a parameter resolver for resolving parameter-matching values based on provided information.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IParameterResolver.ResolveMethodParameters(SignalR.Hubs.MethodDescriptor,SignalR.IJsonValue[])">
+            <summary>
+            Resolves method parameter values based on provided objects.
+            </summary>
+            <param name="method">Method descriptor.</param>
+            <param name="values">List of values to resolve parameter values from.</param>
+            <returns>Array of parameter values.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.DefaultParameterResolver.ResolveParameter(SignalR.Hubs.ParameterDescriptor,SignalR.IJsonValue)">
+            <summary>
+            Resolves a parameter value based on the provided object.
+            </summary>
+            <param name="descriptor">Parameter descriptor.</param>
+            <param name="value">Value to resolve the parameter value from.</param>
+            <returns>The parameter value.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.DefaultParameterResolver.ResolveMethodParameters(SignalR.Hubs.MethodDescriptor,SignalR.IJsonValue[])">
+            <summary>
+            Resolves method parameter values based on provided objects.
+            </summary>
+            <param name="method">Method descriptor.</param>
+            <param name="values">List of values to resolve parameter values from.</param>
+            <returns>Array of parameter values.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.ParameterDescriptor">
+            <summary>
+            Holds information about a single hub method parameter.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ParameterDescriptor.Name">
+            <summary>
+            Parameter name.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.ParameterDescriptor.Type">
+            <summary>
+            Parameter type.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IMethodDescriptorProvider">
+            <summary>
+            Describes a hub method provider that builds a collection of available methods on a given hub.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IMethodDescriptorProvider.GetMethods(SignalR.Hubs.HubDescriptor)">
+            <summary>
+            Retrieve all methods on a given hub.
+            </summary>
+            <param name="hub">Hub descriptor object.</param>
+            <returns>Available methods.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IMethodDescriptorProvider.TryGetMethod(SignalR.Hubs.HubDescriptor,System.String,SignalR.Hubs.MethodDescriptor@,SignalR.IJsonValue[])">
+            <summary>
+            Tries to retrieve a method.
+            </summary>
+            <param name="hub">Hub descriptor object</param>
+            <param name="method">Name of the method.</param>
+            <param name="descriptor">Descriptor of the method, if found. Null otherwise.</param>
+            <param name="parameters">Method parameters to match.</param>
+            <returns>True, if a method has been found.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.ReflectedMethodDescriptorProvider.FetchMethodsFor(SignalR.Hubs.HubDescriptor)">
+            <summary>
+            Retrieves an existing dictionary of all available methods for a given hub from cache.
+            If cache entry does not exist - it is created automatically by BuildMethodCacheFor.
+            </summary>
+            <param name="hub"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.Hubs.ReflectedMethodDescriptorProvider.BuildMethodCacheFor(SignalR.Hubs.HubDescriptor)">
+            <summary>
+            Builds a dictionary of all possible methods on a given hub.
+            Single entry contains a collection of available overloads for a given method name (key).
+            This dictionary is being cached afterwards.
+            </summary>
+            <param name="hub">Hub to build cache for</param>
+            <returns>Dictionary of available methods</returns>
+        </member>
+        <member name="M:SignalR.Hubs.ReflectedMethodDescriptorProvider.TryGetMethod(SignalR.Hubs.HubDescriptor,System.String,SignalR.Hubs.MethodDescriptor@,SignalR.IJsonValue[])">
+            <summary>
+            Searches the specified <paramref name="hub">Hub</paramref> for the specified <paramref name="method"/>.
+            </summary>
+            <remarks>
+            In the case that there are multiple overloads of the specified <paramref name="method"/>, the <paramref name="parameter">parameter set</paramref> helps determine exactly which instance of the overload should be resolved. 
+            If there are multiple overloads found with the same number of matching paramters, none of the methods will be returned because it is not possible to determine which overload of the method was intended to be resolved.
+            </remarks>
+            <param name="hub">Hub to search for the specified <paramref name="method"/> on.</param>
+            <param name="method">The method name to search for.</param>
+            <param name="descriptor">If successful, the <see cref="T:SignalR.Hubs.MethodDescriptor"/> that was resolved.</param>
+            <param name="parameters">The set of parameters that will be used to help locate a specific overload of the specified <paramref name="method"/>.</param>
+            <returns>True if the method matching the name/parameter set is found on the hub, otherwise false.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.HubDescriptor">
+            <summary>
+            Holds information about a single hub.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubDescriptor.Type">
+            <summary>
+            Hub type.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubManager">
+            <summary>
+            Describes a hub manager - main point in the whole hub and method lookup process.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubManager.GetHub(System.String)">
+            <summary>
+            Retrieves a single hub descriptor.
+            </summary>
+            <param name="hubName">Name of the hub.</param>
+            <returns>Hub descriptor, if found. Null, otherwise.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubManager.GetHubs(System.Func{SignalR.Hubs.HubDescriptor,System.Boolean})">
+            <summary>
+            Retrieves all available hubs.
+            </summary>
+            <returns>List of hub descriptors.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubManager.ResolveHub(System.String)">
+            <summary>
+            Resolves a given hub name to a concrete object.
+            </summary>
+            <param name="hubName">Name of the hub.</param>
+            <returns>Hub implementation instance, if found. Null otherwise.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubManager.ResolveHubs">
+            <summary>
+            Resolves all available hubs to their concrete objects.
+            </summary>
+            <returns>List of hub instances.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubManager.GetHubMethod(System.String,System.String,SignalR.IJsonValue[])">
+            <summary>
+            Retrieves a method with a given name on a given hub.
+            </summary>
+            <param name="hubName">Name of the hub.</param>
+            <param name="method">Name of the method to find.</param>
+            <param name="parameters">Method parameters to match.</param>
+            <returns>Descriptor of the method, if found. Null otherwise.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubManager.GetHubMethods(System.String,System.Func{SignalR.Hubs.MethodDescriptor,System.Boolean})">
+            <summary>
+            Gets all methods available to call on a given hub.
+            </summary>
+            <param name="hubName">Name of the hub,</param>
+            <param name="predicate">Optional predicate for filtering results.</param>
+            <returns>List of available methods.</returns>
+        </member>
+        <member name="T:SignalR.Infrastructure.IServerIdManager">
+            <summary>
+            Generates a server id
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.IServerIdManager.ServerId">
+            <summary>
+            The id of the server.
+            </summary>
+        </member>
+        <member name="T:SignalR.Infrastructure.ServerIdManager">
+            <summary>
+            Default <see cref="T:SignalR.Infrastructure.IServerIdManager"/> implementation.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.ServerIdManager.ServerId">
+            <summary>
+            The id of the server.
+            </summary>
+        </member>
+        <member name="T:SignalR.IPersistentConnectionContext">
+            <summary>
+            Provides access to information about a <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+        </member>
+        <member name="P:SignalR.IPersistentConnectionContext.Connection">
+            <summary>
+            Gets the <see cref="T:SignalR.IConnection"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+        </member>
+        <member name="P:SignalR.IPersistentConnectionContext.Groups">
+            <summary>
+            Gets the <see cref="T:SignalR.IConnectionGroupManager"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+        </member>
+        <member name="T:SignalR.Infrastructure.IServerCommandHandler">
+            <summary>
+            Handles commands from server to server.
+            </summary>
+        </member>
+        <member name="M:SignalR.Infrastructure.IServerCommandHandler.SendCommand(SignalR.Infrastructure.ServerCommand)">
+            <summary>
+            Sends a command to all connected servers.
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="P:SignalR.Infrastructure.IServerCommandHandler.Command">
+            <summary>
+            Gets or sets a callback that is invoked when a command is received.
+            </summary>
+        </member>
+        <member name="T:SignalR.JsonSerializerExtensions">
+            <summary>
+            Extensions for <see cref="T:SignalR.IJsonSerializer"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.JsonSerializerExtensions.Parse``1(SignalR.IJsonSerializer,System.String)">
+            <summary>
+            Deserializes the JSON to a .NET object.
+            </summary>
+            <param name="serializer">The serializer</param>
+            <typeparam name="T">The <see cref="T:System.Type"/> of object being deserialized.</typeparam>
+            <param name="json">The JSON to deserialize</param>
+            <returns>The deserialized object from the JSON string.</returns>
+        </member>
+        <member name="M:SignalR.JsonSerializerExtensions.Stringify(SignalR.IJsonSerializer,System.Object)">
+            <summary>
+            Serializes the specified object to a JSON string.
+            </summary>
+            <param name="serializer">The serializer</param>
+            <param name="value">The object to serailize.</param>
+            <returns>A JSON string representation of the object.</returns>
+        </member>
+        <member name="T:SignalR.MessageBroker">
+            <summary>
+            This class is the main coordinator. It schedules work to be done for a particular subscription 
+            and has an algorithm for choosing a number of workers (thread pool threads), to handle
+            the scheduled work.
+            </summary>
+        </member>
+        <member name="T:SignalR.ScaleoutMessageBus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SignalR.MessageBus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SignalR.IMessageBus.Publish(SignalR.Message)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.IMessageBus.Subscribe(SignalR.ISubscriber,System.String,System.Func{SignalR.MessageResult,System.Threading.Tasks.Task{System.Boolean}},System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="subscriber"></param>
+            <param name="cursor"></param>
+            <param name="callback"></param>
+            <param name="maxMessages"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.MessageBus.#ctor(SignalR.IDependencyResolver)">
+            <summary>
+            
+            </summary>
+            <param name="resolver"></param>
+        </member>
+        <member name="M:SignalR.MessageBus.#ctor(SignalR.Infrastructure.ITraceManager,SignalR.Infrastructure.IPerformanceCounterManager)">
+            <summary>
+            
+            </summary>
+            <param name="traceManager"></param>
+        </member>
+        <member name="M:SignalR.MessageBus.Publish(SignalR.Message)">
+            <summary>
+            Publishes a new message to the specified event on the bus.
+            </summary>
+            <param name="source">A value representing the source of the data sent.</param>
+        </member>
+        <member name="M:SignalR.MessageBus.Subscribe(SignalR.ISubscriber,System.String,System.Func{SignalR.MessageResult,System.Threading.Tasks.Task{System.Boolean}},System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="subscriber"></param>
+            <param name="cursor"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.ScaleoutMessageBus.Send(SignalR.Message[])">
+            <summary>
+            Sends messages to the backplane
+            </summary>
+            <param name="messages"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SignalR.ScaleoutMessageBus.OnReceived(System.String,System.UInt64,SignalR.Message[])">
+            <summary>
+            Invoked when a payload is received from the backplane. There should only be one active call at any time.
+            </summary>
+            <param name="streamId">id of the stream</param>
+            <param name="id">id of the payload within that stream</param>
+            <param name="messages">List of messages associated</param>
+            <returns></returns>
+        </member>
+        <member name="T:SignalR.MessageResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SignalR.MessageResult.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.MessageResult"/> struct.
+            </summary>
+            <param name="lastMessageId">Gets a cursor representing the caller state.</param>
+        </member>
+        <member name="M:SignalR.MessageResult.#ctor(System.Collections.Generic.IList{System.ArraySegment{SignalR.Message}},System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.MessageResult"/> struct.
+            </summary>
+            <param name="messages">The array of messages associated with this <see cref="T:SignalR.MessageResult"/>.</param>
+            <param name="lastMessageId">Gets a cursor representing the caller state.</param>
+            <param name="totalCount">The amount of messages populated in the messages array.</param>
+        </member>
+        <member name="P:SignalR.MessageResult.Messages">
+            <summary>
+            Gets an <see cref="T:System.Collections.Generic.IList`1"/> associated with the result.
+            </summary>
+        </member>
+        <member name="P:SignalR.MessageResult.LastMessageId">
+            <summary>
+            Gets a cursor representing the caller state.
+            </summary>
+        </member>
+        <member name="T:SignalR.PersistentConnectionFactory">
+            <summary>
+            Responsible for creating <see cref="T:SignalR.PersistentConnection"/> instances.
+            </summary>
+        </member>
+        <member name="M:SignalR.PersistentConnectionFactory.#ctor(SignalR.IDependencyResolver)">
+            <summary>
+            Creates a new instance of the <see cref="T:SignalR.PersistentConnectionFactory"/> class.
+            </summary>
+            <param name="resolver">The dependency resolver to use for when creating the <see cref="T:SignalR.PersistentConnection"/>.</param>
+        </member>
+        <member name="M:SignalR.PersistentConnectionFactory.CreateInstance(System.Type)">
+            <summary>
+            Creates an instance of the specified type using the dependency resolver or the type's default constructor.
+            </summary>
+            <param name="connectionType">The type of <see cref="T:SignalR.PersistentConnection"/> to create.</param>
+            <returns>An instance of a <see cref="T:SignalR.PersistentConnection"/>. </returns>
+        </member>
+        <member name="T:SignalR.EmptyConnectionIdPrefixGenerator">
+            <summary>
+            The default connection id prefix generator.
+            </summary>
+        </member>
+        <member name="T:SignalR.IConnectionIdPrefixGenerator">
+            <summary>
+            Used to generate prefixes for connection ids.
+            </summary>
+        </member>
+        <member name="M:SignalR.IConnectionIdPrefixGenerator.GenerateConnectionIdPrefix(SignalR.IRequest)">
+            <summary>
+            Creates a prefix for a connection id generated in response to a negotiation request.
+            </summary>
+            <param name="request">The <see cref="T:SignalR.IRequest"/>.</param>
+            <returns>A connection id prefix</returns>
+        </member>
+        <member name="M:SignalR.EmptyConnectionIdPrefixGenerator.GenerateConnectionIdPrefix(SignalR.IRequest)">
+            <summary>
+            Returns an empty connection id prefix.
+            </summary>
+            <param name="request">The <see cref="T:SignalR.IRequest"/>.</param>
+            <returns>An empty string.</returns>
+        </member>
+        <member name="T:SignalR.Hubs.MethodDescriptor">
+            <summary>
+            Holds information about a single hub method.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.MethodDescriptor.ReturnType">
+            <summary>
+            The return type of this method.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.MethodDescriptor.Hub">
+            <summary>
+            Hub descriptor object, target to this method.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.MethodDescriptor.Parameters">
+            <summary>
+            Available method parameters.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.MethodDescriptor.Invoker">
+            <summary>
+            Method invocation delegate.
+            Takes a target hub and an array of invocation arguments as it's arguments.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.MethodDescriptor.Attributes">
+            <summary>
+            Attributes attached to this method.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHub.RejoiningGroups(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Called before a connection completes reconnecting to the <see cref="T:SignalR.Hubs.IHub"/> after a timeout.
+            </summary>
+            <param name="groups">The groups the reconnecting client claims to be a member of.</param>
+            <returns>The groups the client will actually join.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHub.OnConnected">
+            <summary>
+            Called when a new connection is made to the <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHub.OnReconnected">
+            <summary>
+            Called when a connection reconnects to the <see cref="T:SignalR.Hubs.IHub"/> after a timeout.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHub.OnDisconnected">
+            <summary>
+            Called when a connection is disconnected from the <see cref="T:SignalR.Hubs.IHub"/>.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHub.Context">
+            <summary>
+            Gets a <see cref="T:SignalR.Hubs.HubCallerContext"/>. Which contains information about the calling client.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHub.Clients">
+            <summary>
+            Gets a dynamic object that represents all clients connected to this hub (not hub instance).
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.IHub.Groups">
+            <summary>
+            Gets the <see cref="T:SignalR.IGroupManager"/> the hub instance.
+            </summary>
+        </member>
+        <member name="T:SignalR.IJsonSerializer">
+            <summary>
+            Used to serialize and deserialize outgoing/incoming data.
+            </summary>
+        </member>
+        <member name="M:SignalR.IJsonSerializer.Serialize(System.Object,System.IO.TextWriter)">
+            <summary>
+            Serializes the specified object to a <see cref="T:System.IO.TextWriter"/>.
+            </summary>
+            <param name="value">The object to serialize</param>
+            <param name="writer">The <see cref="T:System.IO.TextWriter"/> to serialize the object to.</param>
+        </member>
+        <member name="M:SignalR.IJsonSerializer.Parse(System.String,System.Type)">
+            <summary>
+            Deserializes the JSON to a .NET object.
+            </summary>
+            <param name="json">The JSON to deserialize.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of object being deserialized.</param>
+            <returns>The deserialized object from the JSON string.</returns>
+        </member>
+        <member name="M:SignalR.RequestExtensions.QueryStringOrForm(SignalR.IRequest,System.String)">
+            <summary>
+            Gets a value from the QueryString, and if it's null or empty, gets it from the Form instead.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.IHubDescriptorProvider">
+            <summary>
+            Describes hub descriptor provider, which provides information about available hubs.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.IHubDescriptorProvider.GetHubs">
+            <summary>
+            Retrieve all avaiable hubs.
+            </summary>
+            <returns>Collection of hub descriptors.</returns>
+        </member>
+        <member name="M:SignalR.Hubs.IHubDescriptorProvider.TryGetHub(System.String,SignalR.Hubs.HubDescriptor@)">
+            <summary>
+            Tries to retrieve hub with a given name.
+            </summary>
+            <param name="hubName">Name of the hub.</param>
+            <param name="descriptor">Retrieved descriptor object.</param>
+            <returns>True, if hub has been found</returns>
+        </member>
+        <member name="T:SignalR.Hubs.Hub">
+            <summary>
+            Provides methods that communicate with SignalR connections that connected to a <see cref="T:SignalR.Hubs.Hub"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.Hub.OnDisconnected">
+            <summary>
+            Called when a connection disconnects from this hub instance.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:SignalR.Hubs.Hub.OnConnected">
+            <summary>
+            Called when the connection connects to this hub instance.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:SignalR.Hubs.Hub.OnReconnected">
+            <summary>
+            Called when the connection reconnects to this hub instance.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/></returns>
+        </member>
+        <member name="M:SignalR.Hubs.Hub.RejoiningGroups(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Called before a connection completes reconnecting to this <see cref="T:SignalR.Hubs.IHub"/> instance.
+            </summary>
+            <param name="groups">The groups the reconnecting client claims to be a member of.</param>
+            <returns>The groups the client will actually join.</returns>
+        </member>
+        <member name="P:SignalR.Hubs.Hub.Clients">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.Hub.Context">
+            <summary>
+            Provides information about the calling client.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.Hub.Groups">
+            <summary>
+            The group manager for this hub instance.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubCallerContext.ConnectionId">
+            <summary>
+            Gets the connection id of the calling client.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubCallerContext.RequestCookies">
+            <summary>
+            Gets the cookies for the request.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubCallerContext.Headers">
+            <summary>
+            Gets the headers for the request.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubCallerContext.ServerVariables">
+            <summary>
+            Gets the server variables for the request.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubCallerContext.QueryString">
+            <summary>
+            Gets the querystring for the request.
+            </summary>
+        </member>
+        <member name="P:SignalR.Hubs.HubCallerContext.User">
+            <summary>
+            Gets the <see cref="T:System.Security.Principal.IPrincipal"/> for the request.
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.HubDispatcher">
+            <summary>
+            Handles all communication over the hubs persistent connection.
+            </summary>
+        </member>
+        <member name="T:SignalR.PersistentConnection">
+            <summary>
+            Represents a connection between client and server.
+            </summary>
+        </member>
+        <member name="M:SignalR.PersistentConnection.ProcessRequestAsync(SignalR.HostContext)">
+            <summary>
+            Handles all requests for <see cref="T:SignalR.PersistentConnection"/>s.
+            </summary>
+            <param name="context">The <see cref="T:SignalR.HostContext"/> for the current request.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the <see cref="T:SignalR.PersistentConnection"/> pipeline is complete.</returns>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown if connection wasn't initialized.
+            Thrown if the transport wasn't specified.
+            Thrown if the connection id wasn't specified.
+            </exception>
+        </member>
+        <member name="M:SignalR.PersistentConnection.GetDefaultSignals(System.String)">
+            <summary>
+            Returns the default signals for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+            <param name="connectionId">The id of the incoming connection.</param>
+            <returns>The default signals for this <see cref="T:SignalR.PersistentConnection"/>.</returns>
+        </member>
+        <member name="M:SignalR.PersistentConnection.GetSignals(System.String)">
+            <summary>
+            Returns the signals used in the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+            <param name="connectionId">The id of the incoming connection.</param>
+            <returns>The signals used for this <see cref="T:SignalR.PersistentConnection"/>.</returns>
+        </member>
+        <member name="M:SignalR.PersistentConnection.OnRejoiningGroups(SignalR.IRequest,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Called when a connection reconnects after a timeout to determine which groups should be rejoined.
+            </summary>
+            <param name="request">The <see cref="T:SignalR.IRequest"/> for the current connection.</param>
+            <param name="groups">The groups the calling connection claims to be part of.</param>
+            <param name="connectionId">The id of the reconnecting client.</param>
+            <returns>A collection of group names that should be joined on reconnect</returns>
+        </member>
+        <member name="M:SignalR.PersistentConnection.OnConnectedAsync(SignalR.IRequest,System.String)">
+            <summary>
+            Called when a new connection is made.
+            </summary>
+            <param name="request">The <see cref="T:SignalR.IRequest"/> for the current connection.</param>
+            <param name="connectionId">The id of the connecting client.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the connect operation is complete.</returns>
+        </member>
+        <member name="M:SignalR.PersistentConnection.OnReconnectedAsync(SignalR.IRequest,System.String)">
+            <summary>
+            Called when a connection reconnects after a timeout.
+            </summary>
+            <param name="request">The <see cref="T:SignalR.IRequest"/> for the current connection.</param>
+            <param name="connectionId">The id of the re-connecting client.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the re-connect operation is complete.</returns>
+        </member>
+        <member name="M:SignalR.PersistentConnection.OnReceivedAsync(SignalR.IRequest,System.String,System.String)">
+            <summary>
+            Called when data is received from a connection.
+            </summary>
+            <param name="request">The <see cref="T:SignalR.IRequest"/> for the current connection.</param>
+            <param name="connectionId">The id of the connection sending the data.</param>
+            <param name="data">The payload sent to the connection.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the receive operation is complete.</returns>
+        </member>
+        <member name="M:SignalR.PersistentConnection.OnDisconnectAsync(SignalR.IRequest,System.String)">
+            <summary>
+            Called when a connection disconnects.
+            </summary>
+            <param name="connectionId">The id of the disconnected connection.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the disconnect operation is complete.</returns>
+        </member>
+        <member name="P:SignalR.PersistentConnection.Connection">
+            <summary>
+            Gets the <see cref="T:SignalR.IConnection"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentConnection.Groups">
+            <summary>
+            Gets the <see cref="T:SignalR.IConnectionGroupManager"/> for the <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Hubs.HubDispatcher.#ctor(System.String)">
+            <summary>
+            Initializes an instance of the <see cref="T:SignalR.Hubs.HubDispatcher"/> class.
+            </summary>
+            <param name="url">The base url of the connection url.</param>
+        </member>
+        <member name="M:SignalR.Hubs.HubDispatcher.OnReceivedAsync(SignalR.IRequest,System.String,System.String)">
+            <summary>
+            Processes the hub's incoming method calls.
+            </summary>
+        </member>
+        <member name="T:SignalR.JsonNetSerializer">
+            <summary>
+            Default <see cref="T:SignalR.IJsonSerializer"/> implementation over Json.NET.
+            </summary>
+        </member>
+        <member name="M:SignalR.JsonNetSerializer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.JsonNetSerializer"/> class.
+            </summary>
+        </member>
+        <member name="M:SignalR.JsonNetSerializer.#ctor(Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.JsonNetSerializer"/> class.
+            </summary>
+            <param name="settings">The <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> to use when serializing and deserializing.</param>
+        </member>
+        <member name="M:SignalR.JsonNetSerializer.Parse(System.String,System.Type)">
+            <summary>
+            Deserializes the JSON to a .NET object.
+            </summary>
+            <param name="json">The JSON to deserialize.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of object being deserialized.</param>
+            <returns>The deserialized object from the JSON string.</returns>
+        </member>
+        <member name="M:SignalR.JsonNetSerializer.Serialize(System.Object,System.IO.TextWriter)">
+            <summary>
+            Serializes the specified object to a <see cref="T:System.IO.TextWriter"/>.
+            </summary>
+            <param name="value">The object to serialize</param>
+            <param name="writer">The <see cref="T:System.IO.TextWriter"/> to serialize the object to.</param>
+        </member>
+        <member name="T:SignalR.Json">
+            <summary>
+            Helper class for common JSON operations.
+            </summary>
+        </member>
+        <member name="M:SignalR.Json.CamelCase(System.String)">
+            <summary>
+            Converts the specified name to camel case.
+            </summary>
+            <param name="name">The name to convert.</param>
+            <returns>A camel cased version of the specified name.</returns>
+        </member>
+        <member name="P:SignalR.Json.MimeType">
+            <summary>
+            Gets a string that returns JSON mime type "application/json".
+            </summary>
+        </member>
+        <member name="P:SignalR.Json.JsonpMimeType">
+            <summary>
+            Gets a string that returns JSONP mime type "text/javascript".
+            </summary>
+        </member>
+        <member name="T:SignalR.GroupManager">
+            <summary>
+            The default <see cref="T:SignalR.IGroupManager"/> implementation.
+            </summary>
+        </member>
+        <member name="M:SignalR.GroupManager.#ctor(SignalR.IConnection,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SignalR.GroupManager"/> class.
+            </summary>
+            <param name="connection">The <see cref="T:SignalR.IConnection"/> this group resides on.</param>
+            <param name="groupPrefix">The prefix for this group. Either a <see cref="!:IHub"/> name or <see cref="T:SignalR.PersistentConnection"/> type name.</param>
+        </member>
+        <member name="M:SignalR.GroupManager.Send(System.String,System.Object,System.String[])">
+            <summary>
+            Sends a value to the specified group.
+            </summary>
+            <param name="groupName">The name of the group.</param>
+            <param name="value">The value to send.</param>
+            <returns>A task that represents when send is complete.</returns>
+        </member>
+        <member name="M:SignalR.GroupManager.Add(System.String,System.String)">
+            <summary>
+            Adds a connection to the specified group. 
+            </summary>
+            <param name="connectionId">The connection id to add to the group.</param>
+            <param name="groupName">The name of the group</param>
+            <returns>A task that represents the connection id being added to the group.</returns>
+        </member>
+        <member name="M:SignalR.GroupManager.Remove(System.String,System.String)">
+            <summary>
+            Removes a connection from the specified group.
+            </summary>
+            <param name="connectionId">The connection id to remove from the group.</param>
+            <param name="groupName">The name of the group</param>
+            <returns>A task that represents the connection id being removed from the group.</returns>
+        </member>
+        <member name="T:SignalR.Infrastructure.ServerCommand">
+            <summary>
+            A server to server command.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.ServerCommand.ServerId">
+            <summary>
+            Gets or sets the id of the command where this message originated from.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.ServerCommand.Type">
+            <summary>
+            Gets of sets the command type.
+            </summary>
+        </member>
+        <member name="P:SignalR.Infrastructure.ServerCommand.Value">
+            <summary>
+            Gets or sets the value for this command.
+            </summary>
+        </member>
+        <member name="T:SignalR.Infrastructure.ServerCommandHandler">
+            <summary>
+            Default <see cref="T:SignalR.Infrastructure.IServerCommandHandler"/> implementation.
+            </summary>
+        </member>
+        <member name="T:SignalR.Transports.ITrackingConnection">
+            <summary>
+            Represents a connection that can be tracked by an <see cref="T:SignalR.Transports.ITransportHeartBeat"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITrackingConnection.Disconnect">
+            <summary>
+            Causes the connection to disconnect.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITrackingConnection.Timeout">
+            <summary>
+            Causes the connection to timeout.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITrackingConnection.KeepAlive">
+            <summary>
+            Sends a keep alive ping over the connection.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITrackingConnection.End">
+            <summary>
+            Kills the connection.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITrackingConnection.ConnectionId">
+            <summary>
+            Gets the id of the connection.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITrackingConnection.IsAlive">
+            <summary>
+            Gets a value that represents if the connection is alive.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITrackingConnection.IsTimedOut">
+            <summary>
+            Gets a value that represents if the connection is timed out.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITrackingConnection.SupportsKeepAlive">
+            <summary>
+            Gets a value that represents if the connection supprots keep alive.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITrackingConnection.DisconnectThreshold">
+            <summary>
+            Gets a value indicating the amount of time to wait after the connection dies before firing the disconnecting the connection.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITrackingConnection.Url">
+            <summary>
+            Gets the uri of the connection.
+            </summary>
+        </member>
+        <member name="T:SignalR.Transports.ITransport">
+            <summary>
+            Represents a transport that communicates
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITransport.ProcessRequest(SignalR.ITransportConnection)">
+            <summary>
+            Processes the specified <see cref="T:SignalR.ITransportConnection"/> for this transport.
+            </summary>
+            <param name="connection">The <see cref="T:SignalR.ITransportConnection"/> to process.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the transport has finished processing the connection.</returns>
+        </member>
+        <member name="M:SignalR.Transports.ITransport.Send(System.Object)">
+            <summary>
+            Sends data over the transport.
+            </summary>
+            <param name="value">The value to be sent.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the send is complete.</returns>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.Received">
+            <summary>
+            Gets or sets a callback that is invoked when the transport receives data.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.Connected">
+            <summary>
+            Gets or sets a callback that is invoked when the initial connection connects to the transport.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.TransportConnected">
+            <summary>
+            Gets or sets a callback that is invoked when the transport connects.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.Reconnected">
+            <summary>
+            Gets or sets a callback that is invoked when the transport reconnects.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.Disconnected">
+            <summary>
+            Gets or sets a callback that is invoked when the transport disconnects.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.ConnectionId">
+            <summary>
+            Gets the connection id for the transport.
+            </summary>
+        </member>
+        <member name="P:SignalR.Transports.ITransport.Groups">
+            <summary>
+            Gets the groups the connection is a member of.
+            </summary>
+        </member>
+        <member name="T:SignalR.Transports.ITransportHeartBeat">
+            <summary>
+            Manages tracking the state of connections.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITransportHeartBeat.AddConnection(SignalR.Transports.ITrackingConnection)">
+            <summary>
+            Adds a new connection to the list of tracked connections.
+            </summary>
+            <param name="connection">The connection to be added.</param>
+        </member>
+        <member name="M:SignalR.Transports.ITransportHeartBeat.MarkConnection(SignalR.Transports.ITrackingConnection)">
+            <summary>
+            Marks an existing connection as active.
+            </summary>
+            <param name="connection">The connection to mark.</param>
+        </member>
+        <member name="M:SignalR.Transports.ITransportHeartBeat.RemoveConnection(SignalR.Transports.ITrackingConnection)">
+            <summary>
+            Removes a connection from the list of tracked connections.
+            </summary>
+            <param name="connection">The connection to remove.</param>
+        </member>
+        <member name="M:SignalR.Transports.ITransportHeartBeat.GetConnections">
+            <summary>
+            Gets a list of connections being tracked.
+            </summary>
+            <returns>A list of connections.</returns>
+        </member>
+        <member name="T:SignalR.Transports.ITransportManager">
+            <summary>
+            Manages the transports for connections.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.ITransportManager.GetTransport(SignalR.HostContext)">
+            <summary>
+            Gets the specified transport for the specified <see cref="T:SignalR.HostContext"/>.
+            </summary>
+            <param name="hostContext">The <see cref="T:SignalR.HostContext"/> for the current request.</param>
+            <returns>The <see cref="T:SignalR.Transports.ITransport"/> for the specified <see cref="T:SignalR.HostContext"/>.</returns>
+        </member>
+        <member name="M:SignalR.Transports.ITransportManager.SupportsTransport(System.String)">
+            <summary>
+            Determines whether the specified transport is supported.
+            </summary>
+            <param name="transportName">The name of the transport to test.</param>
+            <returns>True if the transport is supported, otherwise False.</returns>
+        </member>
+        <member name="T:SignalR.Transports.TransportHeartBeat">
+            <summary>
+            Default implementation of <see cref="T:SignalR.Transports.ITransportHeartBeat"/>.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.TransportHeartBeat.#ctor(SignalR.IDependencyResolver)">
+            <summary>
+            Initializes and instance of the <see cref="T:SignalR.Transports.TransportHeartBeat"/> class.
+            </summary>
+            <param name="resolver">The <see cref="T:SignalR.IDependencyResolver"/>.</param>
+        </member>
+        <member name="M:SignalR.Transports.TransportHeartBeat.AddConnection(SignalR.Transports.ITrackingConnection)">
+            <summary>
+            Adds a new connection to the list of tracked connections.
+            </summary>
+            <param name="connection">The connection to be added.</param>
+        </member>
+        <member name="M:SignalR.Transports.TransportHeartBeat.RemoveConnection(SignalR.Transports.ITrackingConnection)">
+            <summary>
+            Removes a connection from the list of tracked connections.
+            </summary>
+            <param name="connection">The connection to remove.</param>
+        </member>
+        <member name="M:SignalR.Transports.TransportHeartBeat.MarkConnection(SignalR.Transports.ITrackingConnection)">
+            <summary>
+            Marks an existing connection as active.
+            </summary>
+            <param name="connection">The connection to mark.</param>
+        </member>
+        <member name="P:SignalR.Transports.LongPollingTransport.LongPollDelay">
+            <summary>
+            The number of milliseconds to tell the browser to wait before restablishing a
+            long poll connection after data is sent from the server. Defaults to 0.
+            </summary>
+        </member>
+        <member name="T:SignalR.PersistentResponse">
+            <summary>
+            Represents a response to a connection.
+            </summary>
+        </member>
+        <member name="M:SignalR.PersistentResponse.#ctor(System.Func{SignalR.Message,System.Boolean})">
+            <summary>
+            Creates a new instance of <see cref="T:SignalR.PersistentResponse"/>.
+            </summary>
+            <param name="exclude">A filter that determines whether messages should be written to the client.</param>
+        </member>
+        <member name="M:SignalR.PersistentResponse.SignalR#IJsonWritable#WriteJson(System.IO.TextWriter)">
+            <summary>
+            Serializes only the necessary components of the <see cref="T:SignalR.PersistentResponse"/> to JSON
+            using Json.NET's JsonTextWriter to improve performance.
+            </summary>
+            <param name="writer">The <see cref="T:System.IO.TextWriter"/> that receives the JSON serialization.</param>
+        </member>
+        <member name="P:SignalR.PersistentResponse.ExcludeFilter">
+            <summary>
+            A filter that determines whether messages should be written to the client.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.MessageId">
+            <summary>
+            The id of the last message in the connection received.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.Messages">
+            <summary>
+            The list of messages to be sent to the receiving connection.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.TotalCount">
+            <summary>
+            The total count of the messages sent the receiving connection.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.Disconnect">
+            <summary>
+            True if the connection receives a disconnect command.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.Aborted">
+            <summary>
+            True if the connection was forcibly closed. 
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.TimedOut">
+            <summary>
+            True if the connection timed out.
+            </summary>
+        </member>
+        <member name="P:SignalR.PersistentResponse.TransportData">
+            <summary>
+            Transport specific configurtion information.
+            </summary>
+        </member>
+        <member name="M:SignalR.TaskAsyncHelper.Interleave``1(System.Func{``0,System.Action,System.Threading.Tasks.Task},System.Func{System.Threading.Tasks.Task},``0,System.Threading.Tasks.TaskCompletionSource{System.Object})">
+            <summary>
+            Passes a task returning function into another task returning function so that
+            it can decide when it starts and returns a task that completes when all are finished
+            </summary>
+        </member>
+        <member name="T:SignalR.Hubs.TrackingDictionary">
+            <summary>
+            A change tracking dictionary.
+            </summary>
+        </member>
+        <member name="T:SignalR.IConnection">
+            <summary>
+            A communication channel for a <see cref="T:SignalR.PersistentConnection"/> and its connections.
+            </summary>
+        </member>
+        <member name="M:SignalR.IConnection.Send(SignalR.ConnectionMessage)">
+            <summary>
+            Sends a message to connections subscribed to the signal.
+            </summary>
+            <param name="message">The message to send.</param>
+            <returns>A task that returns when the message has be sent.</returns>
+        </member>
+        <member name="P:SignalR.IConnection.DefaultSignal">
+            <summary>
+            The main signal for this connection. This is the main signalr for a <see cref="T:SignalR.PersistentConnection"/>.
+            </summary>
+        </member>
+        <member name="T:SignalR.Transports.TransportManager">
+            <summary>
+            The default <see cref="T:SignalR.Transports.ITransportManager"/> implementation.
+            </summary>
+        </member>
+        <member name="M:SignalR.Transports.TransportManager.#ctor(SignalR.IDependencyResolver)">
+            <summary>
+            Initializes a new instance of <see cref="T:SignalR.Transports.TransportManager"/> class.
+            </summary>
+            <param name="resolver">The default <see cref="T:SignalR.IDependencyResolver"/>.</param>
+        </member>
+        <member name="M:SignalR.Transports.TransportManager.Register(System.String,System.Func{SignalR.HostContext,SignalR.Transports.ITransport})">
+            <summary>
+            Adds a new transport to the list of supported transports.
+            </summary>
+            <param name="transportName">The specified transport.</param>
+            <param name="transportFactory">The factory method for the specified transport.</param>
+        </member>
+        <member name="M:SignalR.Transports.TransportManager.Remove(System.String)">
+            <summary>
+            Removes a transport from the list of supported transports.
+            </summary>
+            <param name="transportName">The specified transport.</param>
+        </member>
+        <member name="M:SignalR.Transports.TransportManager.GetTransport(SignalR.HostContext)">
+            <summary>
+            Gets the specified transport for the specified <see cref="T:SignalR.HostContext"/>.
+            </summary>
+            <param name="hostContext">The <see cref="T:SignalR.HostContext"/> for the current request.</param>
+            <returns>The <see cref="T:SignalR.Transports.ITransport"/> for the specified <see cref="T:SignalR.HostContext"/>.</returns>
+        </member>
+        <member name="M:SignalR.Transports.TransportManager.SupportsTransport(System.String)">
+            <summary>
+            Determines whether the specified transport is supported.
+            </summary>
+            <param name="transportName">The name of the transport to test.</param>
+            <returns>True if the transport is supported, otherwise False.</returns>
+        </member>
+    </members>
+</doc>
