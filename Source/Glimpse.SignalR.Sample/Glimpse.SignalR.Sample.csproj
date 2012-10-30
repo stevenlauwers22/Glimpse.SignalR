@@ -82,11 +82,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Package.nuspec" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js">
       <DependentUpon>jquery-1.8.2.js</DependentUpon>
     </None>
     <Content Include="Chat.aspx" />
-    <Content Include="Readme.txt" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js">
       <DependentUpon>jquery-1.8.2.js</DependentUpon>

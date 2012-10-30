@@ -2,11 +2,9 @@
 
 properties {
     $base_dir = resolve-path .
-    $build_dir = "$base_dir\Builds\NuSpec"
-    $build_output_dir = "$base_dir\Builds\NuGet"
+    $build_dir = "$base_dir\Builds"
     $source_dir = "$base_dir\Source"
     $tools_dir = "$base_dir\Tools"
-    $config = "release"
 }
 
 #tasks -------------------------------------------------------------------------------------------------------------
@@ -25,22 +23,15 @@ task clean {
 
 task build -depends clean {
     "Building Glimpse.SignalR.sln"
-    exec { msbuild $base_dir\Glimpse.SignalR.sln /p:Configuration=$config }
+    exec { msbuild $base_dir\Glimpse.SignalR.sln /p:Configuration=Release }
 }
 
 task package -depends build {
     "Creating Glimpse.SignalR.nupkg"
-    xcopy $source_dir\Glimpse.SignalR\bin\$config\Glimpse.SignalR.dll $build_dir\Glimpse.SignalR\lib\net40\Glimpse.SignalR.dll /T /E /Y
-    xcopy $source_dir\Glimpse.SignalR\Readme.txt $build_dir\Glimpse.SignalR\Content\App_Readme\Glimpse.SignalR.txt /T /E /Y
-    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack  $build_dir\Glimpse.SignalR\Glimpse.SignalR.nuspec -OutputDirectory $build_output_dir }
+    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack  $source_dir\Glimpse.SignalR\Package.nuspec -OutputDirectory $build_dir }
 
     "Creating Glimpse.SignalR.Sample.nupkg"
-    xcopy $source_dir\Glimpse.SignalR.Sample\Chat.aspx $build_dir\Glimpse.SignalR.Sample\Content\Chat.aspx /T /E /Y
-    xcopy $source_dir\Glimpse.SignalR.Sample\Chat.aspx.cs $build_dir\Glimpse.SignalR.Sample\Content\Chat.aspx.cs /T /E /Y
-    xcopy $source_dir\Glimpse.SignalR.Sample\Chat.aspx.designer.cs $build_dir\Glimpse.SignalR.Sample\Content\Chat.aspx.designer.cs /T /E /Y
-    xcopy $source_dir\Glimpse.SignalR.Sample\ChatHub.cs $build_dir\Glimpse.SignalR.Sample\Content\ChatHub.cs /T /E /Y
-    xcopy $source_dir\Glimpse.SignalR.Sample\Readme.txt $build_dir\Glimpse.SignalR.Sample\Content\App_Readme\Glimpse.SignalR.Sample.txt /T /E /Y
-    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack  $build_dir\Glimpse.SignalR.Sample\Glimpse.SignalR.Sample.nuspec -OutputDirectory $build_output_dir }
+    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack  $source_dir\Glimpse.SignalR.Sample\Package.nuspec -OutputDirectory $build_dir }
 }
 
 #functions ---------------------------------------------------------------------------------------------------------

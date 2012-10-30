@@ -17,4 +17,7 @@
     </dependencies>
     <tags>Glimpse, SignalR</tags>
   </metadata>
+  <files>
+    <file src="bin\Release\Glimpse.SignalR.dll" target="lib\net40" />
+  </files>
 </package>

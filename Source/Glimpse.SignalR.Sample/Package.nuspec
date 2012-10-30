@@ -15,6 +15,17 @@
       <dependency id="Glimpse.SignalR" version="1.0.0" />
       <dependency id="SignalR" version="1.0.0" />
     </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
+    </frameworkAssemblies>
     <tags>Glimpse, SignalR</tags>
   </metadata>
+  <files>
+    <file src="Chat.aspx" target="Content" />
+    <file src="Chat.aspx.cs" target="Content" />
+    <file src="Chat.aspx.designer.cs" target="Content" />
+    <file src="ChatHub.cs" target="Content" />
+  </files>
 </package>
