@@ -12,8 +12,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
       <dependency id="Glimpse" version="1.0.0" />
-      <dependency id="SignalR.Hosting.Common" version="1.0.0" />
-      <dependency id="SignalR.Server" version="1.0.0" />
+      <dependency id="Microsoft.AspNet.SignalR.Core" version="1.0.0" />
+      <dependency id="Microsoft.AspNet.SignalR.Hosting.Common" version="1.0.0" />
     </dependencies>
     <tags>Glimpse, SignalR</tags>
   </metadata>

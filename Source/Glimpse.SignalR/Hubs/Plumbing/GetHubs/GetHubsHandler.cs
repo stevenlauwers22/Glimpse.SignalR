@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Glimpse.SignalR.Hubs.Contracts.GetHubs;
-using SignalR;
-using SignalR.Hubs;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Glimpse.SignalR.Hubs.Plumbing.GetHubs
 {

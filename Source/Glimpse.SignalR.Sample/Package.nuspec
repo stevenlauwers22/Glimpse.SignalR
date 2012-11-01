@@ -13,7 +13,7 @@
     <dependencies>
       <dependency id="Glimpse.AspNet" version="1.0.0" />
       <dependency id="Glimpse.SignalR" version="1.0.0" />
-      <dependency id="SignalR" version="1.0.0" />
+      <dependency id="Microsoft.AspNet.SignalR" version="1.0.0" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net40" />
