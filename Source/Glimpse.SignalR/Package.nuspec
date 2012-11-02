@@ -15,7 +15,7 @@
       <dependency id="Microsoft.AspNet.SignalR.Core" version="1.0.0" />
       <dependency id="Microsoft.AspNet.SignalR.Hosting.Common" version="1.0.0" />
     </dependencies>
-    <tags>Glimpse, SignalR</tags>
+    <tags>Glimpse SignalR</tags>
   </metadata>
   <files>
     <file src="bin\Release\Glimpse.SignalR.dll" target="lib\net40" />

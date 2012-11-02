@@ -20,7 +20,7 @@
       <frameworkAssembly assemblyName="System.Core" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
     </frameworkAssemblies>
-    <tags>Glimpse, SignalR</tags>
+    <tags>Glimpse SignalR</tags>
   </metadata>
   <files>
     <file src="Chat.aspx" target="Content" />
