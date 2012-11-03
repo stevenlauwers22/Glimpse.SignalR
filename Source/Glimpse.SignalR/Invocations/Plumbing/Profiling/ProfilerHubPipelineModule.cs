@@ -1,20 +1,12 @@
 using System;
 using System.Linq;
 using Glimpse.SignalR.Invocations.Contracts;
-using Glimpse.SignalR.Invocations.Contracts.Repository;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
 {
     public class ProfilerHubPipelineModule : HubPipelineModule
     {
-        private readonly IInvocationRepository _repository;
-
-        public ProfilerHubPipelineModule(IInvocationRepository repository)
-        {
-            _repository = repository;
-        }
-
         protected override bool OnBeforeIncoming(IHubIncomingInvokerContext context)
         {
             context.State["ProfilingHubPipelineModule-Invocation-StartedOn"] = DateTime.Now;
@@ -46,7 +38,7 @@ namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
                 ConnectionId = context.Hub.Context.ConnectionId
             };
 
-            _repository.Add(invocation);
+            PluginSettings.StoreInvocation(invocation);
             return base.OnAfterIncoming(result, context);
         }
 
@@ -71,7 +63,7 @@ namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
                 ConnectionId = context.Hub.Context.ConnectionId
             };
 
-            _repository.Add(invocation);
+            PluginSettings.StoreInvocation(invocation);
             base.OnIncomingError(ex, context);
         }
     }

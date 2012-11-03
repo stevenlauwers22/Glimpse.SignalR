@@ -3,43 +3,27 @@ using System.Linq;
 using Glimpse.Core.Extensibility;
 using Glimpse.SignalR.Invocations.Contracts;
 using Glimpse.SignalR.Invocations.Contracts.GetInvocations;
-using Glimpse.SignalR.Invocations.Contracts.Profiling;
-using Glimpse.SignalR.Invocations.Contracts.Repository;
 using Glimpse.SignalR.Invocations.Plumbing.GetInvocations;
-using Glimpse.SignalR.Invocations.Plumbing.Profiling;
-using Glimpse.SignalR.Invocations.Plumbing.Repository;
 
 namespace Glimpse.SignalR.Invocations
 {
-    public class Plugin : TabBase, ITabSetup
+    public class Plugin : TabBase
     {
         private readonly IGetInvocationsHandler _getInvocationsHandler;
-        private readonly IProfiler _profiler;
 
         public Plugin()
-            : this(new InvocationRepositoryInMemory())
+            : this(new GetInvocationsHandler())
         {
         }
 
-        public Plugin(IInvocationRepository repository)
-            : this(new GetInvocationsHandler(repository), new Profiler(repository))
-        {
-        }
-
-        public Plugin(IGetInvocationsHandler getInvocationsHandler, IProfiler profiler)
+        public Plugin(IGetInvocationsHandler getInvocationsHandler)
         {
             _getInvocationsHandler = getInvocationsHandler;
-            _profiler = profiler;
         }
 
         public override string Name
         {
             get { return "SignalR - Invocations"; }
-        }
-
-        public void Setup(ITabSetupContext context)
-        {
-            _profiler.Start();
         }
 
         public override object GetData(ITabContext context)

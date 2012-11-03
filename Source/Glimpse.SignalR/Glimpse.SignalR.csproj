@@ -58,15 +58,16 @@
     <Compile Include="Invocations\Contracts\GetInvocations\GetInvocationsResult.cs" />
     <Compile Include="Invocations\Contracts\InvocationParameterModel.cs" />
     <Compile Include="Invocations\Contracts\InvocationResultModel.cs" />
+    <Compile Include="Invocations\PluginSettings.cs" />
+    <Compile Include="Invocations\PluginSettingsDefaults.cs" />
     <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsHandler.cs" />
     <Compile Include="Invocations\Contracts\GetInvocations\IGetInvocationsHandler.cs" />
     <Compile Include="Invocations\Contracts\InvocationModel.cs" />
     <Compile Include="Invocations\Contracts\Profiling\IProfiler.cs" />
-    <Compile Include="Invocations\Contracts\Repository\IInvocationRepository.cs" />
-    <Compile Include="Invocations\Plumbing\Repository\RepositoryInMemory.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\Profiler.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\ProfilerHubPipelineModule.cs" />
     <Compile Include="Invocations\Plugin.cs" />
+    <Compile Include="Invocations\PipelineInspector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
