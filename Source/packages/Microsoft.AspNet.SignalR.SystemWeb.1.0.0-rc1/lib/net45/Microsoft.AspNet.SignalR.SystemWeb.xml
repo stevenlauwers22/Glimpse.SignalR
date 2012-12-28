@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNet.SignalR.SystemWeb</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapConnection``1(System.Web.Routing.RouteCollection,System.String,System.String)">
+            <summary>
+            Maps a <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/> with the default dependency resolver to the specified path.
+            </summary>
+            <param name="routes">The route table</param>
+            <typeparam name="T">The type of <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/></typeparam>
+            <param name="name">The name of the route</param>
+            <param name="url">path pattern of the route. Should end with catch-all parameter.</param>
+            <returns>The registered route</returns>
+            <example>
+            routes.MapConnection{MyConnection}("echo", "echo/{*operation}");
+            </example>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapConnection``1(System.Web.Routing.RouteCollection,System.String,System.String,Microsoft.AspNet.SignalR.IDependencyResolver)">
+            <summary>
+            Maps a <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/> with the default dependency resolver to the specified path.
+            </summary>
+            <param name="routes">The route table</param>
+            <typeparam name="T">The type of <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/></typeparam>
+            <param name="name">The name of the route</param>
+            <param name="url">path pattern of the route. Should end with catch-all parameter.</param>
+            <param name="resolver">The dependency resolver to use for this connection</param>
+            <returns>The registered route</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapConnection(System.Web.Routing.RouteCollection,System.String,System.String,System.Type)">
+            <summary>
+            Maps a <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/> with the default dependency resolver to the specified path.
+            </summary>
+            <param name="routes">The route table</param>
+            <param name="type">The type of <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/></param>
+            <param name="name">The name of the route</param>
+            <param name="url">path pattern of the route. Should end with catch-all parameter.</param>
+            <returns>The registered route</returns>
+            <example>
+            routes.MapConnection("echo", "echo/{*operation}", typeof(MyConnection));
+            </example>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapHubs(System.Web.Routing.RouteCollection)">
+            <summary>
+            Initializes the default hub route (~/signalr).
+            </summary>
+            <param name="routes">The route table</param>
+            <returns>The registered route</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapHubs(System.Web.Routing.RouteCollection,Microsoft.AspNet.SignalR.IDependencyResolver)">
+            <summary>
+            Changes the dependency resolver for the default hub route (~/signalr).
+            </summary>
+            <param name="routes">The route table</param>
+            <param name="resolver">The dependency resolver to use for the hub connection</param>
+            <returns>The registered route</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapHubs(System.Web.Routing.RouteCollection,System.String)">
+            <summary>
+            Changes the default hub route from ~/signalr to a specified path.
+            </summary>
+            <param name="routes">The route table</param>
+            <param name="url">The path of the hubs route. This should *NOT* contain catch-all parameter.</param>
+            <returns>The registered route</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapHubs(System.Web.Routing.RouteCollection,System.String,Microsoft.AspNet.SignalR.IDependencyResolver)">
+            <summary>
+            Changes the default hub route from ~/signalr to a specified path.
+            </summary>
+            <param name="routes">The route table</param>
+            <param name="url">The path of the hubs route. This should *NOT* contain catch-all parameter.</param>
+            <param name="resolver">The dependency resolver to use for the hub connection</param>
+            <returns>The registered route</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.SignalR.RouteExtensions.MapConnection(System.Web.Routing.RouteCollection,System.String,System.String,System.Type,Microsoft.AspNet.SignalR.IDependencyResolver)">
+            <summary>
+            Maps a <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/> with the default dependency resolver to the specified path.
+            </summary>        
+            <param name="routes">The route table</param>
+            <param name="name">The name of the route</param>
+            <param name="url">path pattern of the route. Should end with catch-all parameter.</param>
+            <param name="type">The type of <see cref="T:Microsoft.AspNet.SignalR.PersistentConnection"/></param>
+            <param name="resolver">The dependency resolver to use for the hub connection</param>
+            <returns>The registered route</returns>
+        </member>
+    </members>
+</doc>

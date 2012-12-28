@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Glimpse.Core.Extensibility;
-using Glimpse.SignalR.Invocations.Contracts;
-using Glimpse.SignalR.Invocations.Contracts.GetInvocations;
+using Glimpse.SignalR.Invocations.Plumbing;
 using Glimpse.SignalR.Invocations.Plumbing.GetInvocations;
 
 namespace Glimpse.SignalR.Invocations

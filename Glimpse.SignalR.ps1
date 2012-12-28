@@ -23,15 +23,22 @@ task clean {
 
 task build -depends clean {
     "Building Glimpse.SignalR.sln"
-    exec { msbuild $base_dir\Glimpse.SignalR.sln /p:Configuration=Release }
+    exec { msbuild $source_dir\Glimpse.SignalR.sln /p:Configuration=Release }
 }
 
 task package -depends build {
     "Creating Glimpse.SignalR.nupkg"
-    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack  $source_dir\Glimpse.SignalR\Package.nuspec -OutputDirectory $build_dir }
+    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack $source_dir\Glimpse.SignalR\Package.nuspec -OutputDirectory $build_dir }
 
     "Creating Glimpse.SignalR.Sample.nupkg"
-    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack  $source_dir\Glimpse.SignalR.Sample\Package.nuspec -OutputDirectory $build_dir }
+    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack $source_dir\Glimpse.SignalR.Sample\Package.nuspec -OutputDirectory $build_dir }
+}
+
+task publish {
+    "Publishing Glimpse.SignalR.nupkg"
+    $apiKey = Read-Host 'Enter your API key: '
+    $version = Read-Host 'Enter the number of the version you want to publish: '
+    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe push $build_dir\Glimpse.SignalR.$version.nupkg $apiKey }
 }
 
 #functions ---------------------------------------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Glimpse.SignalR.Invocations.Contracts;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
@@ -9,33 +8,33 @@ namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
     {
         protected override bool OnBeforeIncoming(IHubIncomingInvokerContext context)
         {
-            context.State["ProfilingHubPipelineModule-Invocation-StartedOn"] = DateTime.Now;
+            context.StateTracker["ProfilingHubPipelineModule-Invocation-StartedOn"] = DateTime.Now;
             return base.OnBeforeIncoming(context);
         }
 
         protected override object OnAfterIncoming(object result, IHubIncomingInvokerContext context)
         {
-            var startedOn = (DateTime)context.State["ProfilingHubPipelineModule-Invocation-StartedOn"];
+            var startedOn = (DateTime)context.StateTracker["ProfilingHubPipelineModule-Invocation-StartedOn"];
             var invocation = new InvocationModel
             {
+                ConnectionId = context.Hub.Context.ConnectionId,
                 Hub = context.MethodDescriptor.Hub.Name,
                 Method = context.MethodDescriptor.Name,
-                Result = new InvocationResultModel 
-                    { 
+                StartedOn = startedOn,
+                EndedOn = DateTime.Now,
+                Result = new InvocationResultModel
+                    {
                         Value = result,
                         Type = context.MethodDescriptor.ReturnType
                     },
                 Arguments = context.Args.Length > 0 ? context.Args
                     .Select((t, i) => new InvocationArgumentModel
                     {
-                        Value = t, 
+                        Value = t,
                         Name = context.MethodDescriptor.Parameters[i].Name,
-                        Type = context.MethodDescriptor.Parameters[i].Type
+                        Type = context.MethodDescriptor.Parameters[i].ParameterType
                     })
-                    .ToList() : null,
-                StartedOn = startedOn,
-                EndedOn = DateTime.Now,
-                ConnectionId = context.Hub.Context.ConnectionId
+                    .ToList() : null
             };
 
             PluginSettings.StoreInvocation(invocation);
@@ -44,23 +43,23 @@ namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
 
         protected override void OnIncomingError(Exception ex, IHubIncomingInvokerContext context)
         {
-            var startedOn = (DateTime)context.State["ProfilingHubPipelineModule-Invocation-StartedOn"];
+            var startedOn = (DateTime)context.StateTracker["ProfilingHubPipelineModule-Invocation-StartedOn"];
             var invocation = new InvocationModel
             {
+                ConnectionId = context.Hub.Context.ConnectionId,
                 Hub = context.MethodDescriptor.Hub.Name,
                 Method = context.MethodDescriptor.Name,
+                StartedOn = startedOn,
+                EndedOn = DateTime.Now,
                 Result = null,
                 Arguments = context.Args.Length > 0 ? context.Args
                     .Select((t, i) => new InvocationArgumentModel
                     {
                         Value = t,
                         Name = context.MethodDescriptor.Parameters[i].Name,
-                        Type = context.MethodDescriptor.Parameters[i].Type
+                        Type = context.MethodDescriptor.Parameters[i].ParameterType
                     })
-                    .ToList() : null,
-                StartedOn = startedOn,
-                EndedOn = DateTime.Now,
-                ConnectionId = context.Hub.Context.ConnectionId
+                    .ToList() : null
             };
 
             PluginSettings.StoreInvocation(invocation);

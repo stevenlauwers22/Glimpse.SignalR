@@ -30,40 +30,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Glimpse.Core">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Glimpse.1.0.0-ctp1\lib\net40\Glimpse.Core.dll</HintPath>
+    <Reference Include="Glimpse.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.0.0-rc1\lib\net40\Glimpse.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.1.0.0-alpha1\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Hosting.Common">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Hosting.Common.1.0.0-alpha1\lib\net40\Microsoft.AspNet.SignalR.Hosting.Common.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.1.0.0-rc1\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hubs\Contracts\GetHubs\GetHubsRequest.cs" />
+    <Compile Include="Hubs\Plumbing\GetHubs\GetHubsRequest.cs" />
     <Compile Include="Hubs\Plumbing\GetHubs\GetHubsHandler.cs" />
-    <Compile Include="Hubs\Contracts\GetHubs\GetHubsResult.cs" />
-    <Compile Include="Hubs\Contracts\GetHubs\HubMethodModel.cs" />
-    <Compile Include="Hubs\Contracts\GetHubs\HubMethodParameterModel.cs" />
-    <Compile Include="Hubs\Contracts\GetHubs\HubModel.cs" />
-    <Compile Include="Hubs\Contracts\GetHubs\IGetHubsHandler.cs" />
+    <Compile Include="Hubs\Plumbing\GetHubs\GetHubsResult.cs" />
+    <Compile Include="Hubs\Plumbing\GetHubs\HubMethodModel.cs" />
+    <Compile Include="Hubs\Plumbing\GetHubs\HubMethodParameterModel.cs" />
+    <Compile Include="Hubs\Plumbing\GetHubs\HubModel.cs" />
+    <Compile Include="Hubs\Plumbing\GetHubs\IGetHubsHandler.cs" />
     <Compile Include="Hubs\Plugin.cs" />
-    <Compile Include="Invocations\Contracts\GetInvocations\GetInvocationsRequest.cs" />
-    <Compile Include="Invocations\Contracts\GetInvocations\GetInvocationsResult.cs" />
-    <Compile Include="Invocations\Contracts\InvocationParameterModel.cs" />
-    <Compile Include="Invocations\Contracts\InvocationResultModel.cs" />
+    <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsRequest.cs" />
+    <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsResult.cs" />
+    <Compile Include="Invocations\Plumbing\InvocationParameterModel.cs" />
+    <Compile Include="Invocations\Plumbing\InvocationResultModel.cs" />
     <Compile Include="Invocations\PluginSettings.cs" />
     <Compile Include="Invocations\PluginSettingsDefaults.cs" />
     <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsHandler.cs" />
-    <Compile Include="Invocations\Contracts\GetInvocations\IGetInvocationsHandler.cs" />
-    <Compile Include="Invocations\Contracts\InvocationModel.cs" />
-    <Compile Include="Invocations\Contracts\Profiling\IProfiler.cs" />
+    <Compile Include="Invocations\Plumbing\GetInvocations\IGetInvocationsHandler.cs" />
+    <Compile Include="Invocations\Plumbing\InvocationModel.cs" />
+    <Compile Include="Invocations\Plumbing\Profiling\IProfiler.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\Profiler.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\ProfilerHubPipelineModule.cs" />
     <Compile Include="Invocations\Plugin.cs" />
@@ -72,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.nuspec" />
-    <None Include="Packages.config" />
+    <None Include="Packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

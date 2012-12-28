@@ -1,0 +1,610 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Owin.Host.SystemWeb</name>
+    </assembly>
+    <members>
+        <member name="T:Owin.Builder.AppBuilder">
+            <summary>
+            A standard implementation of IAppBuilder 
+            </summary>
+        </member>
+        <member name="T:Owin.Builder.NotFound">
+            <summary>
+            Simple object used by AppBuilder as seed OWIN callable if the
+            builder.Properties["builder.DefaultApp"] is not set
+            </summary>
+        </member>
+        <member name="T:System.Threading.Tasks.TaskHelpers">
+            <summary>
+            Helpers for safely using Task libraries. 
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.Canceled">
+            <summary>
+            Returns a canceled Task. The task is completed, IsCanceled = True, IsFaulted = False.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.Canceled``1">
+            <summary>
+            Returns a canceled Task of the given type. The task is completed, IsCanceled = True, IsFaulted = False.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.Completed">
+            <summary>
+            Returns a completed task that has no result. 
+            </summary>        
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.FromError(System.Exception)">
+            <summary>
+            Returns an error task. The task is Completed, IsCanceled = False, IsFaulted = True
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.FromError``1(System.Exception)">
+            <summary>
+            Returns an error task of the given type. The task is Completed, IsCanceled = False, IsFaulted = True
+            </summary>
+            <typeparam name="TResult"></typeparam>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.FromErrors(System.Collections.Generic.IEnumerable{System.Exception})">
+            <summary>
+            Returns an error task of the given type. The task is Completed, IsCanceled = False, IsFaulted = True
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.FromErrors``1(System.Collections.Generic.IEnumerable{System.Exception})">
+            <summary>
+            Returns an error task of the given type. The task is Completed, IsCanceled = False, IsFaulted = True
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.FromResult``1(``0)">
+            <summary>
+            Returns a successful completed task with the given result.  
+            </summary>        
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.Iterate(System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Return a task that runs all the tasks inside the iterator sequentially. It stops as soon
+            as one of the tasks fails or cancels, or after all the tasks have run succesfully.
+            </summary>
+            <param name="asyncIterator">collection of tasks to wait on</param>
+            <param name="cancellationToken">cancellation token</param>
+            <param name="disposeEnumerator">whether or not to dispose the enumerator we get from <paramref name="asyncIterator"/>.
+            Only set to <c>false</c> if you can guarantee that <paramref name="asyncIterator"/>'s enumerator does not have any resources it needs to dispose.</param>
+            <returns>a task that signals completed when all the incoming tasks are finished.</returns>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.IterateImpl(System.Collections.Generic.IEnumerator{System.Threading.Tasks.Task},System.Threading.CancellationToken)">
+            <summary>
+            Provides the implementation of the Iterate method.
+            Contains special logic to help speed up common cases.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.IterateImplIncompleteTask(System.Collections.Generic.IEnumerator{System.Threading.Tasks.Task},System.Threading.Tasks.Task,System.Threading.CancellationToken)">
+            <summary>
+            Fallback for IterateImpl when the antecedent Task isn't yet complete.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.RunSynchronously(System.Action,System.Threading.CancellationToken)">
+            <summary>
+            Replacement for Task.Factory.StartNew when the code can run synchronously. 
+            We run the code immediately and avoid the thread switch. 
+            This is used to help synchronous code implement task interfaces.
+            </summary>
+            <param name="action">action to run synchronouslyt</param>
+            <param name="token">cancellation token. This is only checked before we run the task, and if cancelled, we immediately return a cancelled task.</param>
+            <returns>a task who result is the result from Func()</returns>
+            <remarks>
+            Avoid calling Task.Factory.StartNew.         
+            This avoids gotchas with StartNew:
+            - ensures cancellation token is checked (StartNew doesn't check cancellation tokens).
+            - Keeps on the same thread. 
+            - Avoids switching synchronization contexts.
+            Also take in a lambda so that we can wrap in a try catch and honor task failure semantics.        
+            </remarks>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.RunSynchronously``1(System.Func{``0},System.Threading.CancellationToken)">
+            <summary>
+            Replacement for Task.Factory.StartNew when the code can run synchronously. 
+            We run the code immediately and avoid the thread switch. 
+            This is used to help synchronous code implement task interfaces.
+            </summary>
+            <typeparam name="TResult">type of result that task will return.</typeparam>
+            <param name="func">function to run synchronously and produce result</param>
+            <param name="cancellationToken">cancellation token. This is only checked before we run the task, and if cancelled, we immediately return a cancelled task.</param>
+            <returns>a task who result is the result from Func()</returns>
+            <remarks>
+            Avoid calling Task.Factory.StartNew.         
+            This avoids gotchas with StartNew:
+            - ensures cancellation token is checked (StartNew doesn't check cancellation tokens).
+            - Keeps on the same thread. 
+            - Avoids switching synchronization contexts.
+            Also take in a lambda so that we can wrap in a try catch and honor task failure semantics.        
+            </remarks>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.RunSynchronously``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)">
+            <summary>
+            Overload of RunSynchronously that avoids a call to Unwrap(). 
+            This overload is useful when func() starts doing some synchronous work and then hits IO and 
+            needs to create a task to finish the work. 
+            </summary>
+            <typeparam name="TResult">type of result that Task will return</typeparam>
+            <param name="func">function that returns a task</param>
+            <param name="cancellationToken">cancellation token. This is only checked before we run the task, and if cancelled, we immediately return a cancelled task.</param>
+            <returns>a task, created by running func().</returns>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.SetIfTaskFailed``1(System.Threading.Tasks.TaskCompletionSource{``0},System.Threading.Tasks.Task)">
+            <summary>
+            Update the completion source if the task failed (cancelled or faulted). No change to completion source if the task succeeded. 
+            </summary>
+            <typeparam name="TResult">result type of completion source</typeparam>
+            <param name="tcs">completion source to update</param>
+            <param name="source">task to update from.</param>
+            <returns>true on success</returns>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.TrySetFromTask``1(System.Threading.Tasks.TaskCompletionSource{``0},System.Threading.Tasks.Task)">
+            <summary>
+            Set a completion source from the given Task.
+            </summary>
+            <typeparam name="TResult">result type for completion source.</typeparam>
+            <param name="tcs">completion source to set</param>
+            <param name="source">Task to get values from.</param>
+            <returns>true if this successfully sets the completion source.</returns>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpers.TrySetFromTask``1(System.Threading.Tasks.TaskCompletionSource{System.Threading.Tasks.Task{``0}},System.Threading.Tasks.Task)">
+            <summary>
+            Set a completion source from the given Task. If the task ran to completion and the result type doesn't match
+            the type of the completion source, then a default value will be used. This is useful for converting Task into
+            Task{AsyncVoid}, but it can also accidentally be used to introduce data loss (by passing the wrong
+            task type), so please execute this method with care.
+            </summary>
+            <typeparam name="TResult">result type for completion source.</typeparam>
+            <param name="tcs">completion source to set</param>
+            <param name="source">Task to get values from.</param>
+            <returns>true if this successfully sets the completion source.</returns>
+        </member>
+        <member name="T:System.Threading.Tasks.TaskHelpers.AsyncVoid">
+            <summary>
+            Used as the T in a "conversion" of a Task into a Task{T}
+            </summary>
+        </member>
+        <member name="T:System.Threading.Tasks.TaskHelpers.CancelCache`1">
+            <summary>
+            This class is a convenient cache for per-type cancelled tasks
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Catch(System.Threading.Tasks.Task,System.Func{System.Threading.Tasks.CatchInfo,System.Threading.Tasks.CatchInfoBase{System.Threading.Tasks.Task}.CatchResult},System.Threading.CancellationToken)">
+            <summary>
+            Calls the given continuation, after the given task completes, if it ends in a faulted state.
+            Will not be called if the task did not fault (meaning, it will not be called if the task ran
+            to completion or was canceled). Intended to roughly emulate C# 5's support for "try/catch" in
+            async methods. Note that this method allows you to return a Task, so that you can either return
+            a completed Task (indicating that you swallowed the exception) or a faulted task (indicating that
+            that the exception should be propagated). In C#, you cannot normally use await within a catch
+            block, so returning a real async task should never be done from Catch().
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Catch``1(System.Threading.Tasks.Task{``0},System.Func{System.Threading.Tasks.CatchInfo{``0},System.Threading.Tasks.CatchInfoBase{System.Threading.Tasks.Task{``0}}.CatchResult},System.Threading.CancellationToken)">
+            <summary>
+            Calls the given continuation, after the given task completes, if it ends in a faulted state.
+            Will not be called if the task did not fault (meaning, it will not be called if the task ran
+            to completion or was canceled). Intended to roughly emulate C# 5's support for "try/catch" in
+            async methods. Note that this method allows you to return a Task, so that you can either return
+            a completed Task (indicating that you swallowed the exception) or a faulted task (indicating that
+            that the exception should be propagated). In C#, you cannot normally use await within a catch
+            block, so returning a real async task should never be done from Catch().
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.CopyResultToCompletionSource``1(System.Threading.Tasks.Task,System.Threading.Tasks.TaskCompletionSource{``0},``0)">
+            <summary>
+            Upon completion of the task, copies its result into the given task completion source, regardless of the
+            completion state. This causes the original task to be fully observed, and the task that is returned by
+            this method will always successfully run to completion, regardless of the original task state.
+            Since this method consumes a task with no return value, you must provide the return value to be used
+            when the inner task ran to successful completion.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.CopyResultToCompletionSource``1(System.Threading.Tasks.Task{``0},System.Threading.Tasks.TaskCompletionSource{``0})">
+            <summary>
+            Upon completion of the task, copies its result into the given task completion source, regardless of the
+            completion state. This causes the original task to be fully observed, and the task that is returned by
+            this method will always successfully run to completion, regardless of the original task state.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.CastToObject(System.Threading.Tasks.Task)">
+            <summary>
+            Cast Task to Task of object
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.CastToObject``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Cast Task of T to Task of object
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.CastFromObject``1(System.Threading.Tasks.Task{System.Object})">
+            <summary>
+            Cast Task of object to Task of T
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.FastUnwrap(System.Threading.Tasks.Task{System.Threading.Tasks.Task})">
+            <summary>
+            A version of task.Unwrap that is optimized to prevent unnecessarily capturing the
+            execution context when the antecedent task is already completed.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.FastUnwrap``1(System.Threading.Tasks.Task{System.Threading.Tasks.Task{``0}})">
+            <summary>
+            A version of task.Unwrap that is optimized to prevent unnecessarily capturing the
+            execution context when the antecedent task is already completed.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Finally(System.Threading.Tasks.Task,System.Action,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, regardless of the state
+            the task ended in. Intended to roughly emulate C# 5's support for "finally" in async methods.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Finally``1(System.Threading.Tasks.Task{``0},System.Action,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, regardless of the state
+            the task ended in. Intended to roughly emulate C# 5's support for "finally" in async methods.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.MarkExceptionsObserved(System.Threading.Tasks.Task)">
+            <summary>
+            Marks a Task as "exception observed". The Task is required to have been completed first.
+            </summary>
+            <remarks>
+            Useful for 'finally' clauses, as if the 'finally' action throws we'll propagate the new
+            exception and lose track of the inner exception.
+            </remarks>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then(System.Threading.Tasks.Task,System.Action,System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault).
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then``1(System.Threading.Tasks.Task,System.Func{``0},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault).
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then(System.Threading.Tasks.Task,System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault).
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then``1(System.Threading.Tasks.Task,System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault).
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then``1(System.Threading.Tasks.Task{``0},System.Action{``0},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault). The continuation is provided with the
+            result of the task as its sole parameter.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then``2(System.Threading.Tasks.Task{``0},System.Func{``0,``1},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault). The continuation is provided with the
+            result of the task as its sole parameter.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then``1(System.Threading.Tasks.Task{``0},System.Func{``0,System.Threading.Tasks.Task},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault). The continuation is provided with the
+            result of the task as its sole parameter.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.Then``2(System.Threading.Tasks.Task{``0},System.Func{``0,System.Threading.Tasks.Task{``1}},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Calls the given continuation, after the given task has completed, if the task successfully ran
+            to completion (i.e., was not cancelled and did not fault). The continuation is provided with the
+            result of the task as its sole parameter.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.ThrowIfFaulted(System.Threading.Tasks.Task)">
+            <summary>
+            Throws the first faulting exception for a task which is faulted. It attempts to preserve the original
+            stack trace when throwing the exception (which should always work in 4.5, and should also work in 4.0
+            when running in full trust). Note: It is the caller's responsibility not to pass incomplete tasks to
+            this method, because it does degenerate into a call to the equivalent of .Wait() on the task when it
+            hasn't yet completed.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.ToAsyncVoidTask(System.Action)">
+            <summary>
+            Adapts any action into a Task (returning AsyncVoid, so that it's usable with Task{T} extension methods).
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.ToTask``1(System.Threading.Tasks.Task,System.Threading.CancellationToken,``0)">
+            <summary>
+            Changes the return value of a task to the given result, if the task ends in the RanToCompletion state.
+            This potentially imposes an extra ContinueWith to convert a non-completed task, so use this with caution.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskHelpersExtensions.TryGetResult``1(System.Threading.Tasks.Task{``0},``0@)">
+            <summary>
+            Attempts to get the result value for the given task. If the task ran to completion, then
+            it will return true and set the result value; otherwise, it will return false.
+            </summary>
+        </member>
+        <member name="T:System.Threading.Tasks.TaskHelpersExtensions.AsyncVoid">
+            <summary>
+            Used as the T in a "conversion" of a Task into a Task{T}
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfoBase`1.Throw">
+            <summary>
+            Returns a CatchResult that re-throws the original exception.
+            </summary>
+        </member>
+        <member name="P:System.Threading.Tasks.CatchInfoBase`1.Exception">
+            <summary>
+            The exception that was thrown to cause the Catch block to execute.
+            </summary>
+        </member>
+        <member name="T:System.Threading.Tasks.CatchInfoBase`1.CatchResult">
+            <summary>
+            Represents a result to be returned from a Catch handler.
+            </summary>
+        </member>
+        <member name="P:System.Threading.Tasks.CatchInfoBase`1.CatchResult.Task">
+            <summary>
+            Gets or sets the task to be returned to the caller.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfo.Handled">
+            <summary>
+            Returns a CatchResult that returns a completed (non-faulted) task.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfo.Task(System.Threading.Tasks.Task)">
+            <summary>
+            Returns a CatchResult that executes the given task and returns it, in whatever state it finishes.
+            </summary>
+            <param name="task">The task to return.</param>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfo.Throw(System.Exception)">
+            <summary>
+            Returns a CatchResult that throws the given exception.
+            </summary>
+            <param name="ex">The exception to throw.</param>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfo`1.Handled(`0)">
+            <summary>
+            Returns a CatchResult that returns a completed (non-faulted) task.
+            </summary>
+            <param name="returnValue">The return value of the task.</param>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfo`1.Task(System.Threading.Tasks.Task{`0})">
+            <summary>
+            Returns a CatchResult that executes the given task and returns it, in whatever state it finishes.
+            </summary>
+            <param name="task">The task to return.</param>
+        </member>
+        <member name="M:System.Threading.Tasks.CatchInfo`1.Throw(System.Exception)">
+            <summary>
+            Returns a CatchResult that throws the given exception.
+            </summary>
+            <param name="ex">The exception to throw.</param>
+        </member>
+        <member name="T:Microsoft.Owin.Host.SystemWeb.OwinHttpHandler">
+            <summary>
+            Processes requests from System.Web as OWIN requests.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.OwinHttpHandler.#ctor">
+            <summary>
+            Processes requests using the default OWIN application.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.OwinHttpHandler.BeginProcessRequest(System.Web.HttpContextBase,System.AsyncCallback,System.Object)">
+            <summary>
+            Initiates an asynchronous call to the HTTP handler.
+            </summary>
+            <param name="httpContext">
+            An System.Web.HttpContextBase object that provides references to intrinsic server
+            objects (for example, Request, Response, Session, and Server) used to service
+            HTTP requests.
+            </param>
+            <param name="callback">
+            The System.AsyncCallback to call when the asynchronous method call is complete.
+            If callback is null, the delegate is not called.
+            </param>
+            <param name="extraData">
+            Any extra data needed to process the request.
+            </param>
+            <returns>
+            An System.IAsyncResult that contains information about the status of the process.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.OwinHttpHandler.EndProcessRequest(System.IAsyncResult)">
+            <summary>
+            Provides an asynchronous process End method when the process ends.
+            </summary>
+            <param name="result">
+            An System.IAsyncResult that contains information about the status of the process.
+            </param>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.OwinHttpHandler.IsReusable">
+            <summary>
+            Gets a value indicating whether another request can use the System.Web.IHttpHandler instance.
+            </summary>
+            <returns>
+            true.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Owin.Host.SystemWeb.PreApplicationStart">
+            <summary>
+            Registers the OWIN request processing module at application startup.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.PreApplicationStart.Initialize">
+            <summary>
+            Registers the OWIN request processing module.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Owin.Host.SystemWeb.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_BlockingNotAllowed">
+            <summary>
+              Looks up a localized string similar to Entering a blocking wait state is not allowed..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_CannotRegisterAfterHeadersSent">
+            <summary>
+              Looks up a localized string similar to Cannot register for event after headers are sent..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_ClientCert">
+            <summary>
+              Looks up a localized string similar to Failed to load the client certificate:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_NullDelegate">
+            <summary>
+              Looks up a localized string similar to OwinHttpHandler cannot invoke a null app delegate..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_OnShutdown">
+            <summary>
+              Looks up a localized string similar to One more more exceptions were thrown on shutdown:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_OwinCallContextCallbackThrew">
+            <summary>
+              Looks up a localized string similar to The IAsyncResult callback for OwinCallHandler threw an exception:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_ProcessingWebSocket">
+            <summary>
+              Looks up a localized string similar to An exception was thrown while processing the WebSocket:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_RegisterModule">
+            <summary>
+              Looks up a localized string similar to Failed to register the OWIN module:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_RequestComplete">
+            <summary>
+              Looks up a localized string similar to The request completed with an exception:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_RequestDisconnect">
+            <summary>
+              Looks up a localized string similar to The application threw one or more exceptions when notified of a client disconnect:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_ShutdownDetectionSetup">
+            <summary>
+              Looks up a localized string similar to Shutdown detection setup failed:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_Startup">
+            <summary>
+              Looks up a localized string similar to An exception was thrown during module initialization startup:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.Exception_TimerCallback">
+            <summary>
+              Looks up a localized string similar to An exception was thrown from a timer callback:.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.WebSockets_SupportDetected">
+            <summary>
+              Looks up a localized string similar to Support for WebSockets has been detected..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Owin.Host.SystemWeb.Resources.WebSockets_SupportNotDetected">
+            <summary>
+              Looks up a localized string similar to No support for WebSockets has been detected..
+            </summary>
+        </member>
+        <member name="T:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions">
+            <summary>
+            Provides extension methods for registering OWIN applications as System.Web routes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions.MapOwinRoute(System.Web.Routing.RouteCollection,System.String)">
+            <summary>
+            Registers a route for the default OWIN application.
+            </summary>
+            <param name="routes">The route collection.</param>
+            <param name="pathBase">The route path to map to the default OWIN application.</param>
+            <returns>The created route.</returns>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions.MapOwinRoute``1(System.Web.Routing.RouteCollection,System.String,``0)">
+            <summary>
+            Registers a route for a specific OWIN application entry point.
+            </summary>
+            <typeparam name="TApp">The OWIN application entry point type.</typeparam>
+            <param name="routes">The route collection.</param>
+            <param name="pathBase">The route path to map to the given OWIN application.</param>
+            <param name="app">The OWIN application entry point.</param>
+            <returns>The created route.</returns>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions.MapOwinRoute(System.Web.Routing.RouteCollection,System.String,System.Action{Owin.IAppBuilder})">
+            <summary>
+            Invokes the System.Action startup delegate to build the OWIN application
+            and then registers a route for it on the given path.
+            </summary>
+            <param name="routes">The route collection.</param>
+            <param name="pathBase">The route path to map to the given OWIN application.</param>
+            <param name="startup">A System.Action delegate invoked to build the OWIN application.</param>
+            <returns>The created route.</returns>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions.MapOwinRoute(System.Web.Routing.RouteCollection,System.String,System.String)">
+            <summary>
+            Registers a route for the default OWIN application.
+            </summary>
+            <param name="routes">The route collection.</param>
+            <param name="name">The given name of the route.</param>
+            <param name="pathBase">The route path to map to the default OWIN application.</param>
+            <returns>The created route.</returns>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions.MapOwinRoute``1(System.Web.Routing.RouteCollection,System.String,System.String,``0)">
+            <summary>
+            Registers a route for a specific OWIN application entry point.
+            </summary>
+            <typeparam name="TApp">The OWIN application entry point type.</typeparam>
+            <param name="routes">The route collection.</param>
+            <param name="name">The given name of the route.</param>
+            <param name="pathBase">The route path to map to the given OWIN application.</param>
+            <param name="app">The OWIN application entry point.</param>
+            <returns>The created route.</returns>
+        </member>
+        <member name="M:Microsoft.Owin.Host.SystemWeb.RouteCollectionExtensions.MapOwinRoute(System.Web.Routing.RouteCollection,System.String,System.String,System.Action{Owin.IAppBuilder})">
+            <summary>
+            Invokes the System.Action startup delegate to build the OWIN application
+            and then registers a route for it on the given path.
+            </summary>
+            <param name="routes">The route collection.</param>
+            <param name="name">The given name of the route.</param>
+            <param name="pathBase">The route path to map to the given OWIN application.</param>
+            <param name="startup">A System.Action delegate invoked to build the OWIN application.</param>
+            <returns>The created route.</returns>
+        </member>
+    </members>
+</doc>

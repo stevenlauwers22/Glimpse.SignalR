@@ -1,6 +1,5 @@
 using Glimpse.Core;
 using Glimpse.Core.Extensibility;
-using Glimpse.SignalR.Invocations.Contracts.Profiling;
 using Glimpse.SignalR.Invocations.Plumbing.Profiling;
 
 namespace Glimpse.SignalR.Invocations

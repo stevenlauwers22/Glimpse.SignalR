@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Glimpse.Core.Extensibility;
-using Glimpse.SignalR.Hubs.Contracts.GetHubs;
 using Glimpse.SignalR.Hubs.Plumbing.GetHubs;
 
 namespace Glimpse.SignalR.Hubs
@@ -40,7 +39,7 @@ namespace Glimpse.SignalR.Hubs
 
             var data = new List<object> { new object[] { "Hub", "Type", "Methods" } };
             data.AddRange(hubs
-                    .Select(hub => new[] { hub.Name, hub.Type.FullName, FormatHubMethods(hub.Methods) })
+                    .Select(hub => new[] { hub.Name, hub.HubType.FullName, FormatHubMethods(hub.Methods) })
                     .ToList());
 
             return data;
@@ -72,7 +71,7 @@ namespace Glimpse.SignalR.Hubs
             }
 
             data.AddRange(hubMethodParameters
-                    .Select(hubMethodParameter => new[] { hubMethodParameter.Name, hubMethodParameter.Type.FullName })
+                    .Select(hubMethodParameter => new[] { hubMethodParameter.Name, hubMethodParameter.ParameterType.FullName })
                     .ToList());
 
             return data;

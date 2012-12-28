@@ -1,5 +1,4 @@
 using System.Linq;
-using Glimpse.SignalR.Invocations.Contracts.GetInvocations;
 
 namespace Glimpse.SignalR.Invocations.Plumbing.GetInvocations
 {

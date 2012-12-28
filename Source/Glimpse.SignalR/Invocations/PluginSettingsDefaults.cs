@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Web;
-using Glimpse.SignalR.Invocations.Contracts;
+using Glimpse.SignalR.Invocations.Plumbing;
 
 namespace Glimpse.SignalR.Invocations
 {

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Glimpse.SignalR.Hubs.Contracts.GetHubs;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
@@ -29,7 +28,7 @@ namespace Glimpse.SignalR.Hubs.Plumbing.GetHubs
                 .Select(hubDescriptor => new HubModel
                 {
                     Name = hubDescriptor.Name,
-                    Type = hubDescriptor.Type,
+                    HubType = hubDescriptor.HubType,
                     Methods = GetHubMethodInfo(hubManager, hubDescriptor)
                 })
                 .ToList();
@@ -65,7 +64,7 @@ namespace Glimpse.SignalR.Hubs.Plumbing.GetHubs
                 .Select(hubMethodParameterDescriptor => new HubMethodParameterModel
                 {
                     Name = hubMethodParameterDescriptor.Name,
-                    Type = hubMethodParameterDescriptor.Type
+                    ParameterType = hubMethodParameterDescriptor.ParameterType
                 })
                 .ToList();
 

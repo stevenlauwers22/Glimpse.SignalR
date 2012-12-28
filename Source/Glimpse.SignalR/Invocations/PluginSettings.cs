@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Glimpse.SignalR.Invocations.Contracts;
+using Glimpse.SignalR.Invocations.Plumbing;
 
 namespace Glimpse.SignalR.Invocations
 {

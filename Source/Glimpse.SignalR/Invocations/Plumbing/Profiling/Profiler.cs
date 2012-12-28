@@ -1,5 +1,4 @@
-﻿using Glimpse.SignalR.Invocations.Contracts.Profiling;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Glimpse.SignalR.Invocations.Plumbing.Profiling

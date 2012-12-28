@@ -12,8 +12,8 @@
 
     <body>
 
-        <script src="Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
-        <script src="Scripts/jquery.signalR-1.0.0-alpha1.min.js" type="text/javascript"></script>
+        <script src="Scripts/jquery-1.8.3.min.js" type="text/javascript"></script>
+        <script src="Scripts/jquery.signalR-1.0.0-rc1.min.js" type="text/javascript"></script>
         <script src="/signalr/hubs" type="text/javascript"></script>
         <script type="text/javascript">
             $(function () {
