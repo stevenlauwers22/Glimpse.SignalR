@@ -1,7 +1,6 @@
 using System.Web;
 using System.Web.Routing;
 using Glimpse.SignalR.Sample.App_Start;
-using Microsoft.AspNet.SignalR;
 
 [assembly: PreApplicationStartMethod(typeof(RegisterHubs), "Start")]
 

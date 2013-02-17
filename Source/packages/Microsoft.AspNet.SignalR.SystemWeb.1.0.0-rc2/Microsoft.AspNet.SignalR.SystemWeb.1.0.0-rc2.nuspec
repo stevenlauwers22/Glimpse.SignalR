@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.AspNet.SignalR.SystemWeb</id>
+    <version>1.0.0-rc2</version>
+    <title>Microsoft ASP.NET SignalR SystemWeb</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.microsoft.com/web/webpi/eula/aspnet_and_web_tools_2012_EULA_ENU.htm</licenseUrl>
+    <projectUrl>http://www.asp.net/signalR</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>This package contains everything you need to host ASP.NET SignalR on IIS.</description>
+    <language>en-US</language>
+    <tags>Microsoft AspNet SignalR AspNetSignalR SystemWeb</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.SignalR.Owin" version="1.0.0-rc2" />
+      <dependency id="Microsoft.Owin.Host.SystemWeb" version="1.0.0-rc2" />
+    </dependencies>
+  </metadata>
+</package>

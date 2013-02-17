@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Glimpse.SignalR.Sample</id>
-    <version>1.0.0-rc1</version>
+    <version>1.0.0-rc2</version>
     <title>Glimpse for SignalR sample application</title>
     <authors>Steven Lauwers</authors>
     <owners>Steven Lauwers</owners>
@@ -11,9 +11,9 @@
     <projectUrl>https://github.com/stevenlauwers22/Glimpse.SignalR/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
-      <dependency id="Glimpse.AspNet" version="1.0.0-rc1" />
-      <dependency id="Glimpse.SignalR" version="1.0.0-rc1" />
-      <dependency id="Microsoft.AspNet.SignalR" version="1.0.0-rc1" />
+      <dependency id="Glimpse.AspNet" version="1.0.0-rc2" />
+      <dependency id="Glimpse.SignalR" version="1.0.0-rc2" />
+      <dependency id="Microsoft.AspNet.SignalR" version="1.0.0-rc2" />
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="net40" />
