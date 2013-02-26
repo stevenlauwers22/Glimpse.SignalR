@@ -4,7 +4,7 @@
 
 ### What does this package do?
 
-This package adds SignalR diagnostics to Glimpse. After installing Glimpse for SignalR, two tabs will be added to the Glimpse UI. One tab containing type information for all your SignalR hubs and a second tab that lists all invocations performed on your SignalR hubs.
+This package adds SignalR diagnostics to Glimpse. After installing Glimpse for SignalR, two tabs will be added to the Glimpse UI. The first tab contains type information for all your SignalR hubs, the second tab lists diagnostics of all invocations performed on your SignalR hubs.
 
 ### What kind of diagnostics does this package give me?
 
