@@ -11,7 +11,7 @@ namespace Glimpse.SignalR.Sample.App_Start
         public static void Start()
         {
             // Register the default hubs route: ~/signalr/hubs
-            RouteTable.Routes.MapHubs();            
+            RouteTable.Routes.MapHubs();
         }
     }
 }
