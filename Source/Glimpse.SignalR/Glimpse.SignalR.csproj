@@ -32,13 +32,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Glimpse.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glimpse.Core, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Glimpse.1.0.0-rc2\lib\net40\Glimpse.Core.dll</HintPath>
+      <HintPath>..\packages\Glimpse.1.2.0\lib\net40\Glimpse.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.1.0.0-rc2\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.1.0.1\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,7 +65,7 @@
     <Compile Include="Invocations\Plumbing\Profiling\Profiler.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\ProfilerHubPipelineModule.cs" />
     <Compile Include="Invocations\Plugin.cs" />
-    <Compile Include="Invocations\PipelineInspector.cs" />
+    <Compile Include="Invocations\Plumbing\Profiling\ProfilerInspector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

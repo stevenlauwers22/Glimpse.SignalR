@@ -27,7 +27,7 @@ namespace Glimpse.SignalR.Invocations.Plumbing.Profiling
                         Value = result,
                         Type = context.MethodDescriptor.ReturnType
                     },
-                Arguments = context.Args.Length > 0 ? context.Args
+                Arguments = context.Args.Count > 0 ? context.Args
                     .Select((t, i) => new InvocationArgumentModel
                     {
                         Value = t,
