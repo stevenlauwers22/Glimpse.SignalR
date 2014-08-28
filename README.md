@@ -47,14 +47,14 @@ In a next version of this pluging we might be able to piggy back on the persiste
 
     Glimpse.SignalR.Invocations.PluginSettings.GetInvocations = () =>
     {
-		// TODO: put in your own persistence logic, could look something this:
+		// TODO: put in your own persistence logic, could look something like this:
         var invocations = Database.ReadAllInvocations();
         return invocations;
     };
 
     Glimpse.SignalR.Invocations.PluginSettings.StoreInvocation = invocation =>
     {
-		// TODO: put in your own persistence logic, could look something this:
+		// TODO: put in your own persistence logic, could look something like this:
         Database.StoreInvocation(invocation);
     };
 
