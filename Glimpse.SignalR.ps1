@@ -15,10 +15,6 @@ task clean {
     "Cleaning Glimpse.SignalR bin and obj directories"
     delete_directory "$source_dir\Glimpse.SignalR\bin"
     delete_directory "$source_dir\Glimpse.SignalR\obj"
-
-    "Cleaning Glimpse.SignalR.Sample bin and obj directories"
-    delete_directory "$source_dir\Glimpse.SignalR.Sample\bin"
-    delete_directory "$source_dir\Glimpse.SignalR.Sample\obj"
 }
 
 task build -depends clean {
@@ -29,9 +25,6 @@ task build -depends clean {
 task package -depends build {
     "Creating Glimpse.SignalR.nupkg"
     exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack $source_dir\Glimpse.SignalR\Package.nuspec -OutputDirectory $build_dir }
-
-    "Creating Glimpse.SignalR.Sample.nupkg"
-    exec { & $tools_dir\NuGet.CommandLine.2.1.0\tools\nuget.exe pack $source_dir\Glimpse.SignalR.Sample\Package.nuspec -OutputDirectory $build_dir }
 }
 
 task publish {
