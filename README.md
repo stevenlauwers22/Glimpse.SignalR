@@ -36,7 +36,7 @@ This tab show a list of all invocation that were performed on your SignalR hubs.
 
 ### How do I install this package?
 
-* From NuGet: `Install-Package Glimpse.SignalR -Pre`
+* From NuGet: `Install-Package Glimpse.SignalR`
 
 ### Any extension points?
 
