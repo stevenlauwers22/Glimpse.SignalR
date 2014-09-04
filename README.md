@@ -18,7 +18,7 @@ This tab display type information for all your hubs, this includes:
 	- The return type
 	- Its parameters, including parameter names and types
 
-![](https://raw.github.com/stevenlauwers22/Glimpse.SignalR/master/Documentation/Hubs.png)
+![](https://raw.github.com/stevenlauwers22/Glimpse.SignalR/master/.documents/Hubs.png)
 
 ##### SignalR - Invocations
 
@@ -32,7 +32,7 @@ This tab show a list of all invocation that were performed on your SignalR hubs.
 - The duration of the invocation in milliseconds
 - The identifier of the connection that invoked the method
 
-![](https://raw.github.com/stevenlauwers22/Glimpse.SignalR/master/Documentation/Invocations.png)
+![](https://raw.github.com/stevenlauwers22/Glimpse.SignalR/master/.documents/Invocations.png)
 
 ### How do I install this package?
 
