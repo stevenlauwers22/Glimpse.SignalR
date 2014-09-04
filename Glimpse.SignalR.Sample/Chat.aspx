@@ -15,6 +15,7 @@
             margin: 20px;
         }
     </style>
+
 </head>
 
 <body>
@@ -32,8 +33,7 @@
                 var encodedName = $('<div />').text(name).html();
                 var encodedMsg = $('<div />').text(message).html();
                 // Add the message to the page. 
-                $('#discussion').append('<li><strong>' + encodedName
-                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+                $('#discussion').append('<li><strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
             };
 
             // Get the user name and store it to prepend to messages.
@@ -58,17 +58,12 @@
                     $.each(messages1, function (index, message) {
                         var name = message.split(':')[0],
                             text = message.split(':')[1];
-                        $('#discussion').append('<li><strong>' + name
-                            + '</strong>:&nbsp;&nbsp;' + text + '</li>');
+                        $('#discussion').append('<li><strong>' + name + '</strong>:&nbsp;&nbsp;' + text + '</li>');
                     });
                 });
         });
     </script>
 
-    <%--<input id="msg" type="text" />
-    <input id="broadcast" type="button" value="broadcast" />
-
-    <ul id="messages"></ul>--%>
     <div class="container">
         <input type="text" id="message" />
         <input type="button" id="sendmessage" value="Send" />

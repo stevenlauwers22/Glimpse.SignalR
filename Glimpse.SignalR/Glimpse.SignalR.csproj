@@ -85,7 +85,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Package.nuspec" />
+    <None Include="Package.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Packages.config">
       <SubType>Designer</SubType>
     </None>
