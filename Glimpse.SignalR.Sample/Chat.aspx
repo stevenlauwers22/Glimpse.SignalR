@@ -20,7 +20,7 @@
 
 <body>
 
-    <script src="Scripts/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-2.2.2.min.js" type="text/javascript"></script>
     <script src="Scripts/jquery.signalR-2.2.0.min.js" type="text/javascript"></script>
     <script src="<%: ResolveClientUrl("~/signalr/hubs") %>" type="text/javascript"></script>
     <script type="text/javascript">
