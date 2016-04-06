@@ -3,7 +3,8 @@
 /Glimpse.SignalR*/obj
 /Glimpse.SignalR*/Glimpse.SignalR*.csproj.user
 
-/packages
-
 /Glimpse.SignalR*.suo
+/Glimpse.SignalR*.user
+
+/packages
 /.vs
