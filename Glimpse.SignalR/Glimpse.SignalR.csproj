@@ -71,6 +71,8 @@
     <Compile Include="Hubs\Plumbing\GetHubs\HubModel.cs" />
     <Compile Include="Hubs\Plumbing\GetHubs\IGetHubsHandler.cs" />
     <Compile Include="Hubs\Plugin.cs" />
+    <Compile Include="Invocations\PluginClientResource.cs" />
+    <Compile Include="Invocations\PluginClientScript.cs" />
     <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsRequest.cs" />
     <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsResult.cs" />
     <Compile Include="Invocations\Plumbing\InvocationParameterModel.cs" />
@@ -94,6 +96,9 @@
     <None Include="Packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Invocations\plugin.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
