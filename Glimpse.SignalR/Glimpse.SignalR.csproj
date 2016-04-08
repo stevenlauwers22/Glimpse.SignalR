@@ -73,6 +73,7 @@
     <Compile Include="Hubs\Plugin.cs" />
     <Compile Include="Invocations\PluginClientResource.cs" />
     <Compile Include="Invocations\PluginClientScript.cs" />
+    <Compile Include="Invocations\PluginDataResource.cs" />
     <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsRequest.cs" />
     <Compile Include="Invocations\Plumbing\GetInvocations\GetInvocationsResult.cs" />
     <Compile Include="Invocations\Plumbing\InvocationParameterModel.cs" />

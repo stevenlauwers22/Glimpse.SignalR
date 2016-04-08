@@ -5,7 +5,7 @@ namespace Glimpse.SignalR.Invocations
 {
     public class PluginClientResource : FileResource, IKey
     {
-        internal const string InternalName = "glimpse_signalr_invocations";
+        internal const string InternalName = "glimpse_signalr_invocations_client";
 
         private EmbeddedResourceInfo GlimpseSignalREmbeddedResourceInfo { get; set; }
 
