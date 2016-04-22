@@ -86,7 +86,6 @@
     <Compile Include="Invocations\Plumbing\Profiling\IProfiler.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\Profiler.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\ProfilerHubPipelineModule.cs" />
-    <Compile Include="Invocations\Plugin.cs" />
     <Compile Include="Invocations\Plumbing\Profiling\ProfilerInspector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

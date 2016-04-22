@@ -64,9 +64,7 @@ namespace Glimpse.SignalR.Invocations
         public IResourceResult Execute(IResourceContext context)
         {
             if (context == null)
-            {
                 throw new ArgumentNullException("context");
-            }
 
             var getInvocationsHandler = new GetInvocationsHandler();
             var getInvocationsRequest = new GetInvocationsRequest();
@@ -80,9 +78,19 @@ namespace Glimpse.SignalR.Invocations
             if (invocations == null)
                 return null;
 
-            var data = new List<object> { new object[] { "Hub", "Method", "Result", "Arguments", "Invoked on", "Duration", "Connection ID" } };
+            var data = new List<object>();
             data.AddRange(invocations
-                .Select(invocation => new[] { invocation.Hub, invocation.Method, FormatInvocationResult(invocation.Result), FormatInvocationArguments(invocation.Arguments), invocation.StartedOn, (invocation.EndedOn - invocation.StartedOn).TotalMilliseconds + " ms", invocation.ConnectionId })
+                .OrderByDescending(invocation => invocation.StartedOn)
+                .Select(invocation => new
+                {
+                    hub = invocation.Hub,
+                    method = invocation.Method,
+                    result = FormatInvocationResult(invocation.Result),
+                    arguments = FormatInvocationArguments(invocation.Arguments),
+                    invokedOn = invocation.StartedOn,
+                    duration = (invocation.EndedOn - invocation.StartedOn).TotalMilliseconds + " ms",
+                    connectionId = invocation.ConnectionId
+                })
                 .ToList());
 
             return data;
@@ -90,28 +98,29 @@ namespace Glimpse.SignalR.Invocations
 
         private static object FormatInvocationResult(InvocationResultModel invocationResult)
         {
-            var data = new List<object> { new object[] { "Value", "Type" } };
             if (invocationResult == null)
-            {
-                data.Add(new object[] { null, null });
-                return data;
-            }
+                return null;
 
-            data.Add(new[] { invocationResult.Value, invocationResult.Type.FullName });
-            return data;
+            return new
+            {
+                value = invocationResult.Value,
+                type = invocationResult.Type.FullName
+            };
         }
 
         private static object FormatInvocationArguments(IEnumerable<InvocationArgumentModel> invocationArguments)
         {
-            var data = new List<object> { new object[] { "Value", "Name", "Type" } };
             if (invocationArguments == null)
-            {
-                data.Add(new object[] { null, null, null });
-                return data;
-            }
+                return null;
 
+            var data = new List<object>();
             data.AddRange(invocationArguments
-                .Select(invocationParameter => new[] { invocationParameter.Value, invocationParameter.Name, invocationParameter.Type.FullName })
+                .Select(invocationParameter => new
+                {
+                    value = invocationParameter.Value,
+                    name = invocationParameter.Name,
+                    type = invocationParameter.Type.FullName
+                })
                 .ToList());
 
             return data;
