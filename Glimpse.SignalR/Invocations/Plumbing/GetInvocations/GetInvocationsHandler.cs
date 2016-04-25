@@ -2,6 +2,11 @@ using System.Linq;
 
 namespace Glimpse.SignalR.Invocations.Plumbing.GetInvocations
 {
+    public interface IGetInvocationsHandler
+    {
+        GetInvocationsResult Handle(GetInvocationsRequest request);
+    }
+
     public class GetInvocationsHandler : IGetInvocationsHandler
     {
         public GetInvocationsResult Handle(GetInvocationsRequest request)

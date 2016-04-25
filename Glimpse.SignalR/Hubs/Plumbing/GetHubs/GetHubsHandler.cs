@@ -5,6 +5,11 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace Glimpse.SignalR.Hubs.Plumbing.GetHubs
 {
+    public interface IGetHubsHandler
+    {
+        GetHubsResult Handle(GetHubsRequest request);
+    }
+
     public class GetHubsHandler : IGetHubsHandler
     {
         public GetHubsResult Handle(GetHubsRequest request)
