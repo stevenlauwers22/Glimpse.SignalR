@@ -1,3 +1,8 @@
+#r "DotNetBuild.Core.dll"
+#r "DotNetBuild.Runner.dll"
+#r "DotNetBuild.Runner.ScriptCs.dll"
+#r "DotNetBuild.Tasks.dll"
+
 using DotNetBuild.Core.Facilities.Logging;
 using DotNetBuild.Core.Facilities.State;
 using DotNetBuild.Tasks;
@@ -15,8 +20,8 @@ dotNetBuild.AddTarget("updateVersionNumber", "Update version number", c
     => c.Do(context => {
             var solutionDirectory = context.ConfigurationSettings.Get<String>("SolutionDirectory");
             const String assemblyMajorVersion = "1";
-            const String assemblyMinorVersion = "0";
-            const String assemblyBuildNumber = "1";
+            const String assemblyMinorVersion = "1";
+            const String assemblyBuildNumber = "0";
             var assemblyInfoTask = new AssemblyInfo
             {
                 AssemblyInfoFiles = new[]
